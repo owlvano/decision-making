@@ -5,11 +5,19 @@ namespace DecisionMaking.Models
 {
     public static class MathAlgorithms
     {
+
+        #region North-Western Angle
+
         public static int[,] NWAngle(int [] supply, int[] demand)
         {
             int[,] finalRoute = new int[supply.Length, demand.Length];
-            int[] tempSupply = supply;
-            int[] tempDemand = demand;
+
+            int[] tempSupply= new int[supply.Length]; 
+            int[] tempDemand = new int[demand.Length];
+
+            Array.Copy(supply, tempSupply, supply.Length);
+            Array.Copy(demand, tempDemand, demand.Length);
+
             int minValue;
             for(int i=0; i < finalRoute.GetLength(0); i++)
             {
@@ -33,6 +41,9 @@ namespace DecisionMaking.Models
             return finalRoute;
         }
 
+        #endregion
+
+        #region Stepping Stone algorithm
 
         public static List<int[]> FindSteppingStonePath(AltSolution aSolution, int u, int v)
         {
@@ -40,6 +51,7 @@ namespace DecisionMaking.Models
             aPath.Add(new int[] { u, v });
             if(!LookHorizontally(aSolution, aPath, u, v, u, v))
             {
+                //to be refactored
                 throw new Exception("Incorrect stepping stone input");
             }
             return aPath;
@@ -80,5 +92,7 @@ namespace DecisionMaking.Models
             }
             return false;
         }
+        #endregion
     }
+
 }

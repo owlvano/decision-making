@@ -4,10 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:DecisionMaking.Views"
-        xmlns:local="clr-namespace:DecisionMaking"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <views:InputView x:Name="InputViewControl"/>
-    </Grid>
+        Title="Transportation problem" Height="350" Width="525"
+        ResizeMode="CanMinimize">
+
+<views:InputView x:Name="InputViewControl"/>
+
 </Window>

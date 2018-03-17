@@ -73,11 +73,19 @@
     <Compile Include="Models\CostMatrix.cs" />
     <Compile Include="Models\MathAlgorithms.cs" />
     <Compile Include="Models\MathModel.cs" />
+    <Compile Include="Tabs\ITab.cs" />
+    <Compile Include="Tabs\SolutionTab.cs" />
+    <Compile Include="ViewModels\CalculationViewModel.cs" />
     <Compile Include="ViewModels\InputViewModel.cs" />
+    <Compile Include="Views\CalculationView.xaml.cs">
+      <DependentUpon>CalculationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\InputView.xaml.cs">
       <DependentUpon>InputView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VML\ViewModelLocator.cs" />
+    <Compile Include="Views\SolutionTabView.xaml.cs">
+      <DependentUpon>SolutionTabView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -90,7 +98,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\CalculationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\InputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SolutionTabView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

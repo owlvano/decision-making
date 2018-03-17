@@ -3,17 +3,39 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:vml="clr-namespace:DecisionMaking.VML"
+             xmlns:vm="clr-namespace:DecisionMaking.ViewModels"
              xmlns:data="clr-namespace:DecisionMaking.Models"
              xmlns:local="clr-namespace:DecisionMaking.Views"
              xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
-             vml:ViewModelLocator.AutoHookedUpViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <StackPanel>
-        <DockPanel>
-            <dg2d:DataGrid2D Name="input_dataGrid2D"
+    
+    <UserControl.DataContext>
+        <vm:InputViewModel />
+    </UserControl.DataContext>
+    
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Left" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <WrapPanel Margin="10" Orientation="Vertical" HorizontalAlignment="Center">
+                <Label Name ="supply_label" Content="Supply"/>
+                <dg2d:DataGrid2D Name="supply_dataGrid2D"
+                ItemsSource2D="{Binding Supply}"/>
+            </WrapPanel>
+
+            <WrapPanel Margin="10" Orientation="Vertical"  HorizontalAlignment="Center">
+                <Label Name ="demand_label" Content="Demand"/>
+                <dg2d:DataGrid2D Name="demand_dataGrid2D"
+                 ItemsSource2D="{Binding Demand}"/>
+            </WrapPanel>
+        </StackPanel>
+        <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right">
+            <Button Name="calculate_Btn" Content="Calculate" Margin="10" Padding="5" Command="{Binding CalculateCommand}" />
+            <Button Name="exit_Btn" Content="Exit" Margin="10" Padding="5" Command="{Binding ExitCommand}"/>
+        </WrapPanel>
+        <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
+            <Label Name ="matrix_label" Content="CostMatrix"/>
+            <dg2d:DataGrid2D Name="matrix_dataGrid2D"
                  ItemsSource2D="{Binding CostMatrixSource}"/>
-        </DockPanel>
-    </StackPanel>
+        </WrapPanel>
+    </DockPanel>
 </UserControl>

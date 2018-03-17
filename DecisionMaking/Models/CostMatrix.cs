@@ -32,23 +32,23 @@ namespace DecisionMaking.Models
             SourceCostMatrix = sourceCostMatrix;
         }
 
-        public bool ValidateData(out string message)
-        {
-            if(Supply.Length != SourceCostMatrix.GetLength(0))
-            {
-                message = "Supplies don't match matrix";
-                return false;
-            }
-            else if (Demand.Length != SourceCostMatrix.GetLength(1))
-            {
-                message = "Demands don't match matrix";
-                return false;
-            }
-            else
-            {
-                message = "Seems to be alright";
-                return true;
-            }
-        }
+        //public bool ValidateData(out string message)
+        //{
+        //    if(Supply.Length != SourceCostMatrix.GetLength(0))
+        //    {
+        //        message = "Supplies don't match matrix";
+        //        return false;
+        //    }
+        //    else if (Demand.Length != SourceCostMatrix.GetLength(1))
+        //    {
+        //        message = "Demands don't match matrix";
+        //        return false;
+        //    }
+        //    else
+        //    {
+        //        message = "Seems to be alright";
+        //        return true;
+        //    }
+        //}
     }
 }
