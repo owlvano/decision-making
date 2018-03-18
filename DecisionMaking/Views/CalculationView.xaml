@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Name="calc_window"
         Title="{Binding TitleText}"
-        Height="400" Width="600">
+        Height="700" Width="650">
     
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">

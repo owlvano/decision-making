@@ -15,7 +15,7 @@ namespace DecisionMaking.Models
         public CostMatrix()
         {
             Supply = new int[] { 850, 800, 950 };
-            Demand = new int[] { 550, 500, 550, 650, 350};
+            Demand = new int[] { 550, 500, 550, 650, 350 };
             SourceCostMatrix = new int[3, 5]
             {
                 {4,1,2,7,8},
@@ -23,6 +23,19 @@ namespace DecisionMaking.Models
                 {8,4,6,2,5},
             };
 
+            //Костины данные
+            //Supply = new int[] { 900, 800, 580, 620 };   
+            //Demand = new int[] { 550, 500, 550, 650, 350 };
+
+            //Supply = new int[] { 120, 140, 115, 105 };
+            //Demand = new int[] { 75, 65, 90, 95, 100, 55 };
+            //SourceCostMatrix = new int[4, 6]
+            //{
+            //    {4,1,2,7,8,5},
+            //    {7,5,3,4,6,8},
+            //    {9,8,5,6,11,12},
+            //    {8,4,6,2,5,10},
+            //};
         }
 
         public CostMatrix(int[,] sourceCostMatrix, int[] supply, int[] demand)

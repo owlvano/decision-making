@@ -129,6 +129,7 @@ namespace DecisionMaking.Models
 
         #endregion
 
+        #region Adjust new solution based on the previous one
         public static int[,] NewFirstSolution(int[,] originalSolution, List<OptimizationPoint> adjustmentList)
         {
             int[,] finalRoute = originalSolution.Clone() as int[,];
@@ -147,7 +148,9 @@ namespace DecisionMaking.Models
             }
             return finalRoute;
         }
+        #endregion
 
+        #region Operations
         public static int Addition(int x, int y)
         {
             return x + y;
@@ -158,5 +161,5 @@ namespace DecisionMaking.Models
             return x - y;
         }
     }
-
+        #endregion
 }

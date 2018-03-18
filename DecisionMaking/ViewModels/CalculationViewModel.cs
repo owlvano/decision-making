@@ -63,7 +63,9 @@ namespace DecisionMaking.ViewModels
             int minSigmaIndex = Sigmas.FindIndex((c) => c == minSigma);
 
 
-            _childViewModel = new CalculationViewModel(new AltSolution(A_Solution, minSigmaIndex));
+            _childViewModel = new CalculationViewModel(new AltSolution(A_Solution, 
+                                                                       MathAlgorithms.NewFirstSolution(A_Solution.FirstSolution, 
+                                                                                                       A_Solution.OptimizationList[minSigmaIndex])));
             _childView = new CalculationView
             {
                 DataContext = _childViewModel

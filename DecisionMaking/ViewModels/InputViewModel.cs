@@ -79,10 +79,12 @@ namespace DecisionMaking.ViewModels
         }
         private void ExecuteCalculateCommand()
         {
-            _childViewModel = new CalculationViewModel(new AltSolution(_model.C_Matrix));
+            _childViewModel = new CalculationViewModel(new AltSolution(_model.C_Matrix, 
+                                                           MathAlgorithms.NWAngle(_model.C_Matrix.Supply, 
+                                                                                  _model.C_Matrix.Demand)));
             _childView = new CalculationView();
             _childView.DataContext = _childViewModel;
-            _childView.Show();
+            _childView.ShowDialog();
         }
 
         private void ExecuteExitCommand() => Application.Current.Shutdown();
