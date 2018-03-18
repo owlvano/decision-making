@@ -55,3 +55,6 @@ D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Debug\DecisionMaking.csproj.CoreCompileInputs.cache
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Debug\DecisionMaking.exe
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Debug\DecisionMaking.pdb
+D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Debug\DecisionMaking.csprojResolveAssemblyReference.cache
+D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Debug\Views\GraphTab.g.cs
+D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Debug\Views\GraphTab.baml

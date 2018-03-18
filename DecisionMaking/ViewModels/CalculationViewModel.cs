@@ -1,35 +1,32 @@
 ﻿using DecisionMaking.Models;
 using DecisionMaking.Tabs;
+using DecisionMaking.Views;
 using Prism.Commands;
 using Prism.Mvvm;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+using System.Windows;
+
 
 namespace DecisionMaking.ViewModels
 {
     class CalculationViewModel: BindableBase
     {
-        private MathModel _model;
+        private CalculationView _childView;
+        private CalculationViewModel _childViewModel;
 
+        private AltSolution _a_Solution;
         private ICollection<ITab> _tabs;
-        public ICollection<ITab> Tabs { get => _tabs; set => _tabs = value; }
-
         private static int _stepCount = 0;
-        public static int StepCount { get => _stepCount; set => _stepCount = value; }
-
-        public string TitleText
-        {
-            get => "Calculation step";
-        }
-
-
-
+        private List<int> _sigmas;
         private int[,] _firstSolution;
+
+        public AltSolution A_Solution { get => _a_Solution; set => _a_Solution = value; }
+        public ICollection<ITab> Tabs { get => _tabs; set => _tabs = value; }
+        public static int StepCount { get => _stepCount; set => _stepCount = value; }
+        public List<int> Sigmas { get => _sigmas; set => _sigmas = value; }
+
         public int[,] FirstSolution
         {
             get => _firstSolution;
@@ -39,32 +36,69 @@ namespace DecisionMaking.ViewModels
             }
         }
 
-
-        public CalculationViewModel()
+        public string TitleText
         {
-            StepCount++;
-            CloseWindowCommand = new DelegateCommand(ExecuteCloseWindowCommand);
-            Tabs = new ObservableCollection<ITab>();
+            get => "Calculation step #" + StepCount;
         }
 
-        public CalculationViewModel(MathModel model) : this()
+        public string FirstSolutionName
         {
-            _model = model;
-            _model.A_solution = new AltSolution(_model.C_matrix);
-            _firstSolution = _model.A_solution.FirstSolution;
-            Tabs.Add(new SolutionTab(_model.A_solution, "First Solution"));
-            for (int i = 0; i < _model.A_solution.OptimizationList.Count; i++)
-            {
-                Tabs.Add(new SolutionTab(_model.A_solution, $"Solution {i+2}", i));
-            }
-
+            get => "First solution";
         }
 
-        public DelegateCommand CloseWindowCommand { get; set; }
+        public DelegateCommand ClosingWindowCommand { get; set; }
+        public DelegateCommand NextStepCommand { get; set; }
 
-        private void ExecuteCloseWindowCommand()
+        private void ExecuteClosingWindowCommand()
         {
             StepCount--;
         }
-    }
+
+        private void ExecuteNextStepCommand()
+        {
+            int minSigma = Sigmas.Min();
+            if (minSigma >= 0)
+            {
+                MessageBox.Show("Last step (this solution is the most optimal)", "Notification", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+            int minSigmaIndex = Sigmas.FindIndex((c) => c == minSigma);
+
+
+            _childViewModel = new CalculationViewModel(new AltSolution(A_Solution, minSigmaIndex));
+            _childView = new CalculationView
+            {
+                DataContext = _childViewModel
+            };
+            
+            _childView.ShowDialog();
+        }
+
+        private CalculationViewModel()
+        {
+            StepCount++;
+
+            ClosingWindowCommand = new DelegateCommand(ExecuteClosingWindowCommand);
+            NextStepCommand = new DelegateCommand(ExecuteNextStepCommand);
+
+            Tabs = new ObservableCollection<ITab>();
+            Sigmas = new List<int>();
+        }
+        public CalculationViewModel(AltSolution aSolution) : this()
+        {
+            A_Solution = aSolution;
+
+
+            Sigmas = A_Solution.Sigmas;
+            _firstSolution = A_Solution.FirstSolution;
+
+
+            for (int i = 0; i < A_Solution.OptimizationList.Count; i++)
+            {
+                Sigmas.Add(MathAlgorithms.CalculateSigmas(A_Solution, i, 1));
+                Tabs.Add(new SolutionTab(A_Solution, $"Solution {i + 2}", i, 1));
+            }
+
+        }
+    }   
 }

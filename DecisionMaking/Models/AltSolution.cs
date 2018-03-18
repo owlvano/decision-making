@@ -6,17 +6,26 @@ namespace DecisionMaking.Models
     {
         private CostMatrix _source;
         private int[,] _firstSolution;
-        private List<List<int[]>> _optimizationList;
+        private List<List<OptimizationPoint>> _optimizationList;
+        private List<int> _sigmas;
 
         public CostMatrix Source { get => _source; set => _source = value; }
         public int[,] FirstSolution { get => _firstSolution; set => _firstSolution = value; }
-        public List<List<int[]>> OptimizationList { get => _optimizationList; set => _optimizationList = value; }
+        internal List<List<OptimizationPoint>> OptimizationList { get => _optimizationList; set => _optimizationList = value; }
+        public List<int> Sigmas { get => _sigmas; set => _sigmas = value; }
+        
 
-        public AltSolution(CostMatrix source)
+        private AltSolution()
+        {
+            Sigmas = new List<int>();
+        }
+
+        public AltSolution(CostMatrix source): this()
         {
             Source = source;
             FirstSolution = MathAlgorithms.NWAngle(Source.Supply, Source.Demand);
-            OptimizationList = new List<List<int[]>>();
+
+            OptimizationList = new List<List<OptimizationPoint>>();
 
             for (int i = 0; i < FirstSolution.GetLength(0); i++)
             {
@@ -31,6 +40,24 @@ namespace DecisionMaking.Models
             }
         }
 
+        public AltSolution(AltSolution parent, int solutionIndex): this()
+        {
+            Source = parent.Source;
+            FirstSolution = MathAlgorithms.NewFirstSolution(parent.FirstSolution, parent.OptimizationList[solutionIndex]);
 
+            OptimizationList = new List<List<OptimizationPoint>>();
+
+            for (int i = 0; i < FirstSolution.GetLength(0); i++)
+            {
+                for (int j = 0; j < FirstSolution.GetLength(1); j++)
+                {
+                    if (FirstSolution[i, j] != 0)
+                    {
+                        continue;
+                    }
+                    OptimizationList.Add(MathAlgorithms.FindSteppingStonePath(this, i, j));
+                }
+            }
+        }
     }
 }

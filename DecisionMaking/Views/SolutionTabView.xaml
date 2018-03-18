@@ -8,11 +8,10 @@
              xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-
     <DockPanel>
         <WrapPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
             <Label Name="sigmaLabel" Content="σ = "/>
-            <Label Name="sigmaValueLabel" Content=" ses "/>
+            <Label Name="sigmaValueLabel" Content="{Binding Sigma}"/>
         </WrapPanel>
         <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
             <dg2d:DataGrid2D x:Name="aSolutionMatrix" IsReadOnly="True" ItemsSource2D="{Binding SolutionMatrixOutput}"/>

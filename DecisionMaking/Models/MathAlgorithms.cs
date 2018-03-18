@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DecisionMaking.Models
 {
@@ -45,19 +46,33 @@ namespace DecisionMaking.Models
 
         #region Stepping Stone algorithm
 
-        public static List<int[]> FindSteppingStonePath(AltSolution aSolution, int u, int v)
-        {
-            List<int[]> aPath = new List<int[]>();
-            aPath.Add(new int[] { u, v });
+        public static List<OptimizationPoint> FindSteppingStonePath(AltSolution aSolution, int u, int v)
+        {;
+            List<OptimizationPoint> aPath = new List<OptimizationPoint>();
+            aPath.Add(new OptimizationPoint(new int[] { u, v }));
+
             if(!LookHorizontally(aSolution, aPath, u, v, u, v))
             {
                 //to be refactored
                 throw new Exception("Incorrect stepping stone input");
             }
+
+            for(int i=0; i < aPath.Count; i++)
+            {
+                if (i%2 == 0)
+                {
+                    aPath[i].OperationDelegate = Addition;
+                }
+                else
+                {
+                    aPath[i].OperationDelegate = Subtraction;
+                }
+            }
+
             return aPath;
         }
 
-        public static bool LookHorizontally(AltSolution aSolution, List<int[]> aPath, int u, int v, int u1, int v1)
+        public static bool LookHorizontally(AltSolution aSolution, List<OptimizationPoint> aPath, int u, int v, int u1, int v1)
         {
             for(int i = 0; i < aSolution.Source.Demand.Length; i++)
             {
@@ -65,19 +80,19 @@ namespace DecisionMaking.Models
                 {
                     if (i == v1)
                     {
-                        aPath.Add(new int[] { u, i });
+                        aPath.Add(new OptimizationPoint(new int[] { u, i }));
                         return true;
                     }
                     if(LookVertically(aSolution, aPath, u, i, u1, v1))
                     {
-                        aPath.Add(new int[] { u, i });
+                        aPath.Add(new OptimizationPoint(new int[] { u, i }));
                         return true;
                     }
                 }
             }
             return false;
         }
-        public static bool LookVertically(AltSolution aSolution, List<int[]> aPath, int u, int v, int u1, int v1)
+        public static bool LookVertically(AltSolution aSolution, List<OptimizationPoint> aPath, int u, int v, int u1, int v1)
         {
             for (int i = 0; i < aSolution.Source.Supply.Length; i++)
             {
@@ -85,7 +100,7 @@ namespace DecisionMaking.Models
                 {
                     if (LookHorizontally(aSolution, aPath, i, v, u1, v1))
                     {
-                        aPath.Add(new int[] { i, v });
+                        aPath.Add(new OptimizationPoint(new int[] { i, v }));
                         return true;
                     }
                 }
@@ -93,6 +108,53 @@ namespace DecisionMaking.Models
             return false;
         }
         #endregion
+
+        #region Calculate sigma
+        public static int CalculateSigmas(AltSolution aSolution, int solutionNum, int amount)
+        {
+            int sigma = 0;
+
+            List<OptimizationPoint> CurrentOptimizationPath = aSolution.OptimizationList[solutionNum];
+
+            for (int i = 0; i < CurrentOptimizationPath.Count; i++)
+            {
+                sigma = CurrentOptimizationPath[i].OperationDelegate(sigma, amount * aSolution.Source.SourceCostMatrix[CurrentOptimizationPath[i][0], CurrentOptimizationPath[i][1]]);
+
+            }
+
+            return sigma;
+        }
+
+        #endregion
+
+        public static int[,] NewFirstSolution(int[,] originalSolution, List<OptimizationPoint> adjustmentList)
+        {
+            int[,] finalRoute = originalSolution.Clone() as int[,];
+            List<int> subtrList = new List<int>();
+            foreach(OptimizationPoint i in adjustmentList)
+            {
+                if (i.OperationDelegate == Subtraction)
+                {
+                    subtrList.Add(originalSolution[i[0], i[1]]);
+                }
+            }
+            int adjustmentAmount = subtrList.Min();
+            foreach (OptimizationPoint i in adjustmentList)
+            {
+                finalRoute[i[0], i[1]] = i.OperationDelegate(finalRoute[i[0], i[1]], adjustmentAmount);
+            }
+            return finalRoute;
+        }
+
+        public static int Addition(int x, int y)
+        {
+            return x + y;
+        }
+
+        public static int Subtraction(int x, int y)
+        {
+            return x - y;
+        }
     }
 
 }

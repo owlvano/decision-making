@@ -73,12 +73,17 @@
     <Compile Include="Models\CostMatrix.cs" />
     <Compile Include="Models\MathAlgorithms.cs" />
     <Compile Include="Models\MathModel.cs" />
+    <Compile Include="Models\Optimization.cs" />
+    <Compile Include="Tabs\GraphTab.cs" />
     <Compile Include="Tabs\ITab.cs" />
     <Compile Include="Tabs\SolutionTab.cs" />
     <Compile Include="ViewModels\CalculationViewModel.cs" />
     <Compile Include="ViewModels\InputViewModel.cs" />
     <Compile Include="Views\CalculationView.xaml.cs">
       <DependentUpon>CalculationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GraphTab.xaml.cs">
+      <DependentUpon>GraphTab.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\InputView.xaml.cs">
       <DependentUpon>InputView.xaml</DependentUpon>
@@ -99,6 +104,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\CalculationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GraphTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

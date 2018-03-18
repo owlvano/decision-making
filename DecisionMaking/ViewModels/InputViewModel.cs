@@ -56,9 +56,9 @@ namespace DecisionMaking.ViewModels
         {
             _model = new MathModel();
 
-            CostMatrixSource = _model.C_matrix.SourceCostMatrix;
-            Supply = _model.C_matrix.Supply;
-            Demand = _model.C_matrix.Demand;
+            CostMatrixSource = _model.C_Matrix.SourceCostMatrix;
+            Supply = _model.C_Matrix.Supply;
+            Demand = _model.C_Matrix.Demand;
 
             CalculateCommand = new DelegateCommand(ExecuteCalculateCommand, CanExecuteCalculateCommand).
                                    ObservesProperty(() => Supply).
@@ -79,7 +79,7 @@ namespace DecisionMaking.ViewModels
         }
         private void ExecuteCalculateCommand()
         {
-            _childViewModel = new CalculationViewModel(_model);
+            _childViewModel = new CalculationViewModel(new AltSolution(_model.C_Matrix));
             _childView = new CalculationView();
             _childView.DataContext = _childViewModel;
             _childView.ShowDialog();
