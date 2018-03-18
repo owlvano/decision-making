@@ -11,6 +11,7 @@
     <DockPanel>
         <WrapPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
             <Label Name="sigmaLabel" Content="σ = "/>
+            <Label Name="sigmaCalcLabel" Content="{Binding SigmaEquation}"/>
             <Label Name="sigmaValueLabel" Content="{Binding Sigma}"/>
         </WrapPanel>
         <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">

@@ -13,11 +13,13 @@ namespace DecisionMaking.Tabs
         private List<OptimizationPoint> _currentOptimizationPath;
         private string[,] _solutionMatrixOutput;
         private int _sigma;
+        private string _sigmaEquation;
 
         public AltSolution A_Solution { get => _a_Solution; set => _a_Solution = value; }
         public List<OptimizationPoint> CurrentOptimizationPath { get => _currentOptimizationPath; set => _currentOptimizationPath = value; }
         public string[,] SolutionMatrixOutput { get => _solutionMatrixOutput; set => _solutionMatrixOutput = value; }
         public int Sigma { get => _sigma; set => _sigma = value; }
+        public string SigmaEquation { get => _sigmaEquation; set => _sigmaEquation = value; }
         public string Name { get; set; }
 
         public SolutionTab(AltSolution altSolution, string name)
@@ -25,13 +27,14 @@ namespace DecisionMaking.Tabs
             Name = name;
             A_Solution = altSolution;
             SolutionMatrixOutput = FillOutputMatrix(A_Solution.FirstSolution);
-            Sigma = 0;
+
         }
 
         public SolutionTab(AltSolution altSolution, string name, int solutionNum, int amount): this(altSolution, name)
         {
             CurrentOptimizationPath = A_Solution.OptimizationList[solutionNum];
             Sigma = A_Solution.Sigmas[solutionNum];
+            SigmaEquation = A_Solution.SigmaEquations[solutionNum];
             ApplySteppingStoneChange(amount);
         }
 

@@ -19,10 +19,16 @@
     </i:Interaction.Triggers>
      
     <DockPanel>
-        <WrapPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Margin="10">
-            <Label Name ="first_solution_label" Content="FirstSolution"/>
-            <dg2d:DataGrid2D Name="matrix_dataGrid2D"
-                 ItemsSource2D="{Binding FirstSolution}"/>
+        <WrapPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal"  Margin="10">
+            <WrapPanel Orientation="Vertical" Margin="10">
+                <Label Name ="cost_matrix_label" Content="Source Cost Matrix"/>
+                <dg2d:DataGrid2D Name="cost_dataGrid2D" ItemsSource2D="{Binding SourceCostMatrix}" IsReadOnly="True"/>
+            </WrapPanel>
+            <WrapPanel Orientation="Vertical" Margin="10">
+                <Label Name ="first_solution_label" Content="First Solution"/>
+                <dg2d:DataGrid2D Name="solution_dataGrid2D" ItemsSource2D="{Binding FirstSolution}" IsReadOnly="True"/>
+            </WrapPanel>
+
         </WrapPanel>
         <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right">
             <Button Name="calculate_Btn" Content="Move to next step" Margin="10" Padding="5" Command="{Binding NextStepCommand}" />
@@ -33,6 +39,9 @@
                 <DataTemplate DataType="{x:Type tabs:SolutionTab}">
                     <local:SolutionTabView />
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type tabs:GraphTab}">
+                    <local:GraphTabView />
+                </DataTemplate>
             </TabControl.Resources>
             
             <TabControl.ItemTemplate>
@@ -42,6 +51,7 @@
                     </TextBlock>
                 </DataTemplate>
             </TabControl.ItemTemplate>
+            
         </TabControl>
         
         <!--<WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">

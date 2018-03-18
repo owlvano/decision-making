@@ -40,3 +40,5 @@ D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMakingTests
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMakingTests\obj\Debug\DecisionMakingTests.csproj.CoreCompileInputs.cache
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMakingTests\obj\Debug\DecisionMakingTests.dll
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMakingTests\obj\Debug\DecisionMakingTests.pdb
+D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMakingTests\bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.dll
+D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMakingTests\bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.xml

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace DecisionMaking.Views
 {
     /// <summary>
-    /// Логика взаимодействия для GraphTab.xaml
+    /// Логика взаимодействия для GraphTabView.xaml
     /// </summary>
-    public partial class GraphTab : UserControl
+    public partial class GraphTabView : UserControl
     {
-        public GraphTab()
+        public GraphTabView()
         {
             InitializeComponent();
         }

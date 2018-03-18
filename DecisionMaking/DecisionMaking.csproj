@@ -48,6 +48,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Controls.DataVisualization.Toolkit.4.0.0.0\lib\net40-Client\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Wpf.6.3.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -69,11 +72,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Graphs\GraphCollection.cs" />
+    <Compile Include="Graphs\IGraphData.cs" />
     <Compile Include="Models\AltSolution.cs" />
     <Compile Include="Models\CostMatrix.cs" />
+    <Compile Include="Graphs\GraphData.cs" />
     <Compile Include="Models\MathAlgorithms.cs" />
     <Compile Include="Models\MathModel.cs" />
-    <Compile Include="Models\Optimization.cs" />
+    <Compile Include="Models\OptimizationPoint.cs" />
     <Compile Include="Tabs\GraphTab.cs" />
     <Compile Include="Tabs\ITab.cs" />
     <Compile Include="Tabs\SolutionTab.cs" />
@@ -82,8 +88,8 @@
     <Compile Include="Views\CalculationView.xaml.cs">
       <DependentUpon>CalculationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\GraphTab.xaml.cs">
-      <DependentUpon>GraphTab.xaml</DependentUpon>
+    <Compile Include="Views\GraphTabView.xaml.cs">
+      <DependentUpon>GraphTabView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\InputView.xaml.cs">
       <DependentUpon>InputView.xaml</DependentUpon>
@@ -107,7 +113,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\GraphTab.xaml">
+    <Page Include="Views\GraphTabView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -82,7 +82,7 @@ namespace DecisionMaking.ViewModels
             _childViewModel = new CalculationViewModel(new AltSolution(_model.C_Matrix));
             _childView = new CalculationView();
             _childView.DataContext = _childViewModel;
-            _childView.ShowDialog();
+            _childView.Show();
         }
 
         private void ExecuteExitCommand() => Application.Current.Shutdown();

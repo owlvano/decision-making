@@ -8,16 +8,18 @@ namespace DecisionMaking.Models
         private int[,] _firstSolution;
         private List<List<OptimizationPoint>> _optimizationList;
         private List<int> _sigmas;
+        private List<string> _sigmaEquations;
 
         public CostMatrix Source { get => _source; set => _source = value; }
         public int[,] FirstSolution { get => _firstSolution; set => _firstSolution = value; }
         internal List<List<OptimizationPoint>> OptimizationList { get => _optimizationList; set => _optimizationList = value; }
         public List<int> Sigmas { get => _sigmas; set => _sigmas = value; }
-        
+        public List<string> SigmaEquations { get => _sigmaEquations; set => _sigmaEquations = value; }
 
         private AltSolution()
         {
             Sigmas = new List<int>();
+            SigmaEquations = new List<string>();
         }
 
         public AltSolution(CostMatrix source): this()

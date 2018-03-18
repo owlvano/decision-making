@@ -110,17 +110,19 @@ namespace DecisionMaking.Models
         #endregion
 
         #region Calculate sigma
-        public static int CalculateSigmas(AltSolution aSolution, int solutionNum, int amount)
+        public static int CalculateSigmas(AltSolution aSolution, int solutionNum, int amount, out string equation)
         {
             int sigma = 0;
+            equation = "0";
 
             List<OptimizationPoint> CurrentOptimizationPath = aSolution.OptimizationList[solutionNum];
 
             for (int i = 0; i < CurrentOptimizationPath.Count; i++)
             {
                 sigma = CurrentOptimizationPath[i].OperationDelegate(sigma, amount * aSolution.Source.SourceCostMatrix[CurrentOptimizationPath[i][0], CurrentOptimizationPath[i][1]]);
-
+                equation += ((CurrentOptimizationPath[i].OperationDelegate == Addition)? "+": "-") + aSolution.Source.SourceCostMatrix[CurrentOptimizationPath[i][0], CurrentOptimizationPath[i][1]].ToString();
             }
+            equation += "=";
 
             return sigma;
         }
