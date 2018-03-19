@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DecisionMaking.Fuzzy;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -46,7 +47,7 @@ namespace DecisionMaking.Models
 
         #region Stepping Stone algorithm
 
-        public static List<OptimizationPoint> FindSteppingStonePath(AltSolution aSolution, int u, int v)
+        public static List<OptimizationPoint> FindSteppingStonePath(AltSolutionModel aSolution, int u, int v)
         {;
             List<OptimizationPoint> aPath = new List<OptimizationPoint>();
             aPath.Add(new OptimizationPoint(new int[] { u, v }));
@@ -72,7 +73,7 @@ namespace DecisionMaking.Models
             return aPath;
         }
 
-        public static bool LookHorizontally(AltSolution aSolution, List<OptimizationPoint> aPath, int u, int v, int u1, int v1)
+        public static bool LookHorizontally(AltSolutionModel aSolution, List<OptimizationPoint> aPath, int u, int v, int u1, int v1)
         {
             for(int i = 0; i < aSolution.Source.Demand.Length; i++)
             {
@@ -92,7 +93,7 @@ namespace DecisionMaking.Models
             }
             return false;
         }
-        public static bool LookVertically(AltSolution aSolution, List<OptimizationPoint> aPath, int u, int v, int u1, int v1)
+        public static bool LookVertically(AltSolutionModel aSolution, List<OptimizationPoint> aPath, int u, int v, int u1, int v1)
         {
             for (int i = 0; i < aSolution.Source.Supply.Length; i++)
             {
@@ -110,12 +111,12 @@ namespace DecisionMaking.Models
         #endregion
 
         #region Calculate sigma
-        public static int CalculateSigmas(AltSolution aSolution, int solutionNum, int amount, out string equation)
+        public static int CalculateSigma(AltSolutionModel aSolution, int solutionNum, int amount, out string equation)
         {
             int sigma = 0;
             equation = "0";
 
-            List<OptimizationPoint> CurrentOptimizationPath = aSolution.OptimizationList[solutionNum];
+            List<OptimizationPoint> CurrentOptimizationPath = aSolution.PathList[solutionNum];
 
             for (int i = 0; i < CurrentOptimizationPath.Count; i++)
             {
@@ -129,8 +130,29 @@ namespace DecisionMaking.Models
 
         #endregion
 
+        #region CalculateCost
+        public static int CalculateCost(int[,] solution, int[,] costMatrix)
+        {
+            int output = 0;
+            if (solution.GetLength(0) != costMatrix.GetLength(0) || solution.GetLength(1) != costMatrix.GetLength(1))
+            {
+                return output; //lame implementation
+            }
+            for (int i = 0; i < solution.GetLength(0); i++)
+            {
+                for(int j = 0; j < solution.GetLength(1); j++)
+                {
+                    output += solution[i, j] * costMatrix[i, j];
+                }
+            }
+            return output;
+        }
+
+        
+        #endregion
+
         #region Adjust new solution based on the previous one
-        public static int[,] NewFirstSolution(int[,] originalSolution, List<OptimizationPoint> adjustmentList)
+        public static int[,] NewSolution(int[,] originalSolution, List<OptimizationPoint> adjustmentList)
         {
             int[,] finalRoute = originalSolution.Clone() as int[,];
             List<int> subtrList = new List<int>();
@@ -160,6 +182,7 @@ namespace DecisionMaking.Models
         {
             return x - y;
         }
-    }
         #endregion
+    }
+
 }

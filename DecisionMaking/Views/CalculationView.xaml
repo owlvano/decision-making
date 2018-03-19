@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Name="calc_window"
         Title="{Binding TitleText}"
-        Height="700" Width="650">
+        Height="600" Width="525">
     
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
@@ -25,10 +25,15 @@
                 <dg2d:DataGrid2D Name="cost_dataGrid2D" ItemsSource2D="{Binding SourceCostMatrix}" IsReadOnly="True"/>
             </WrapPanel>
             <WrapPanel Orientation="Vertical" Margin="10">
-                <Label Name ="first_solution_label" Content="First Solution"/>
-                <dg2d:DataGrid2D Name="solution_dataGrid2D" ItemsSource2D="{Binding FirstSolution}" IsReadOnly="True"/>
+                <Label Name ="first_solution_label">
+                    <Run Text="{Binding FirstSolutionContent, Mode=OneWay}" />
+                </Label>
+                    <dg2d:DataGrid2D Name="solution_dataGrid2D" ItemsSource2D="{Binding FirstSolution}" IsReadOnly="True"/>
             </WrapPanel>
-
+        </WrapPanel>
+        <WrapPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label Name="cost_label" Content="Z = "/>
+            <Label Name="cost_content_label" Content="{Binding Cost}"/>
         </WrapPanel>
         <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right">
             <Button Name="calculate_Btn" Content="Move to next step" Margin="10" Padding="5" Command="{Binding NextStepCommand}" />

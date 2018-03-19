@@ -1,9 +1,11 @@
-﻿using DecisionMaking.Graphs;
+﻿using DecisionMaking.Constants;
+using DecisionMaking.Graphs;
 using DecisionMaking.Models;
 using DecisionMaking.Tabs;
 using DecisionMaking.Views;
 using Prism.Commands;
 using Prism.Mvvm;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -14,33 +16,30 @@ namespace DecisionMaking.ViewModels
 {
     class CalculationViewModel: BindableBase
     {
+        private AltSolutionModel _altSolutionModel;
         private CalculationView _childView;
         private CalculationViewModel _childViewModel;
 
-        private AltSolution _a_Solution;
-        private ICollection<ITab> _tabs;
-        private static int _stepCount = 0;
-        private List<int> _sigmas;
-        private List<string> _sigmaEquations;
-        private int[,] _firstSolution;
-        private int[,] _sourceCostMatrix;
+        public static int StepCount { get; set; } = 0;
+        public static CalculationMode SelectedMode { get; set; } = CalculationMode.NonFuzzy;
 
-        public AltSolution A_Solution { get => _a_Solution; set => _a_Solution = value; }
-        public ICollection<ITab> Tabs { get => _tabs; set => _tabs = value; }
-        public static int StepCount { get => _stepCount; set => _stepCount = value; }
-        public List<int> Sigmas { get => _sigmas; set => _sigmas = value; }
-        public List<string> SigmaEquations { get => _sigmaEquations; set => _sigmaEquations = value; }
-        public int[,] FirstSolution { get => _firstSolution; set => _firstSolution = value; }
-        public int[,] SourceCostMatrix { get => _sourceCostMatrix; set => _sourceCostMatrix = value; }
+
+        public ICollection<ITab> Tabs { get; set; }
+        public int[,] FirstSolution { get; set; }
+
+        public int[,] SourceCostMatrix { get; set; }
+        public List<int> Sigmas { get; set; }
+        public List<string> SigmaEquations { get; set; }
+        public int Cost { get; set; }
 
         public string TitleText
         {
             get => "Calculation step #" + StepCount;
         }
 
-        public string FirstSolutionName
+        public string FirstSolutionContent
         {
-            get => "First solution";
+            get => $"E_{StepCount}_1";
         }
 
         public DelegateCommand ClosingWindowCommand { get; set; }
@@ -54,6 +53,7 @@ namespace DecisionMaking.ViewModels
 
         private void ExecuteNextStepCommand()
         {
+            
             int minSigma = Sigmas.Min();
             if (minSigma >= 0)
             {
@@ -63,9 +63,9 @@ namespace DecisionMaking.ViewModels
             int minSigmaIndex = Sigmas.FindIndex((c) => c == minSigma);
 
 
-            _childViewModel = new CalculationViewModel(new AltSolution(A_Solution, 
-                                                                       MathAlgorithms.NewFirstSolution(A_Solution.FirstSolution, 
-                                                                                                       A_Solution.OptimizationList[minSigmaIndex])));
+            _childViewModel = new CalculationViewModel(new AltSolutionModel(_altSolutionModel, 
+                                                                       MathAlgorithms.NewSolution(_altSolutionModel.FirstSolution, 
+                                                                                                       _altSolutionModel.PathList[minSigmaIndex])));
             _childView = new CalculationView
             {
                 DataContext = _childViewModel
@@ -77,7 +77,6 @@ namespace DecisionMaking.ViewModels
         private CalculationViewModel()
         {
             StepCount++;
-
             ClosingWindowCommand = new DelegateCommand(ExecuteClosingWindowCommand);
             NextStepCommand = new DelegateCommand(ExecuteNextStepCommand);
 
@@ -85,28 +84,32 @@ namespace DecisionMaking.ViewModels
 
         }
 
-        public CalculationViewModel(AltSolution aSolution) : this()
+        public CalculationViewModel(AltSolutionModel aSolution) : this()
         {
-            A_Solution = aSolution;
+            _altSolutionModel = aSolution;
 
-            SourceCostMatrix = A_Solution.Source.SourceCostMatrix;
-            Sigmas = A_Solution.Sigmas;
-            SigmaEquations = A_Solution.SigmaEquations;
-            _firstSolution = A_Solution.FirstSolution;
+            SourceCostMatrix = _altSolutionModel.Source.SourceCostMatrix;
+            FirstSolution = _altSolutionModel.FirstSolution;
+            Cost = MathAlgorithms.CalculateCost(FirstSolution, SourceCostMatrix);
 
 
-            for (int i = 0; i < A_Solution.OptimizationList.Count; i++)
+            Sigmas = _altSolutionModel.Sigmas;
+            SigmaEquations = _altSolutionModel.SigmaEquations;
+
+            for (int i = 0; i < _altSolutionModel.PathList.Count; i++)
             {
-                Sigmas.Add(MathAlgorithms.CalculateSigmas(A_Solution, i, 1, out string sigmaString));
+                Sigmas.Add(MathAlgorithms.CalculateSigma(_altSolutionModel, i, 1, out string sigmaString));
                 SigmaEquations.Add(sigmaString);
-                Tabs.Add(new SolutionTab(A_Solution, $"Solution {i + 2}", i, 1));
+                Tabs.Add(new SolutionTab(_altSolutionModel, $"E_{StepCount}_{i + 2}", i, 1));
             }
+
             GraphCollection collection = new GraphCollection();
-            foreach(SolutionTab i in Tabs)
+            foreach (SolutionTab i in Tabs)
             {
                 collection.Add(new GraphData(i.Name, i.Sigma));
             }
-            Tabs.Add(new GraphTab($"Sigma graph",collection));
+
+            Tabs.Add(new GraphTab($"Sigma graph", collection));
         }
     }   
 }

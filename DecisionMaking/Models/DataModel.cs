@@ -1,18 +1,17 @@
-﻿using System;
+﻿using DecisionMaking.Fuzzy;
 
 namespace DecisionMaking.Models
 {
-    public class CostMatrix
+    public class DataModel
     {
-        private int[,] _sourceCostMatrix;
-        private int[] _supply;
-        private int[] _demand;
 
-        public int[,] SourceCostMatrix { get => _sourceCostMatrix; set => _sourceCostMatrix = value; }
-        public int[] Supply { get => _supply; set => _supply = value; }
-        public int[] Demand { get => _demand; set => _demand = value; }
+        public int[,] SourceCostMatrix { get; set; }
+        internal FuzzyNumber[,] FuzzySourceCostMatrix { get; set; }
+        public int[] Supply { get; set; }
+        public int[] Demand { get; set; }
 
-        public CostMatrix()
+
+        public DataModel()
         {
             Supply = new int[] { 850, 800, 950 };
             Demand = new int[] { 550, 500, 550, 650, 350 };
@@ -22,7 +21,12 @@ namespace DecisionMaking.Models
                 {7,5,3,4,6},
                 {8,4,6,2,5},
             };
-
+            FuzzySourceCostMatrix = new FuzzyNumber[3, 5]
+            {
+                { new FuzzyNumber(3,4,6), new FuzzyNumber(1,1,3), new FuzzyNumber(1,2,4),new FuzzyNumber(4,7,10),new FuzzyNumber(7,8,10),},
+                { new FuzzyNumber(4,7,8), new FuzzyNumber(2,5,7), new FuzzyNumber(2,3,6),new FuzzyNumber(3,4,5),new FuzzyNumber(3,6,8),},
+                { new FuzzyNumber(5,8,12), new FuzzyNumber(2,4,5), new FuzzyNumber(4,6,9),new FuzzyNumber(1,2,4),new FuzzyNumber(4,5,7),},
+            };
             //Костины данные
             //Supply = new int[] { 900, 800, 580, 620 };   
             //Demand = new int[] { 550, 500, 550, 650, 350 };
@@ -38,7 +42,7 @@ namespace DecisionMaking.Models
             //};
         }
 
-        public CostMatrix(int[,] sourceCostMatrix, int[] supply, int[] demand)
+        public DataModel(int[,] sourceCostMatrix, int[] supply, int[] demand)
         {
             Supply = supply;
             Demand = demand;

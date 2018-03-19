@@ -1,48 +1,37 @@
 ﻿using DecisionMaking.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DecisionMaking.Tabs
 {
     public class SolutionTab: ITab
     {
-        private AltSolution _a_Solution;
-        private List<OptimizationPoint> _currentOptimizationPath;
-        private string[,] _solutionMatrixOutput;
-        private int _sigma;
-        private string _sigmaEquation;
 
-        public AltSolution A_Solution { get => _a_Solution; set => _a_Solution = value; }
-        public List<OptimizationPoint> CurrentOptimizationPath { get => _currentOptimizationPath; set => _currentOptimizationPath = value; }
-        public string[,] SolutionMatrixOutput { get => _solutionMatrixOutput; set => _solutionMatrixOutput = value; }
-        public int Sigma { get => _sigma; set => _sigma = value; }
-        public string SigmaEquation { get => _sigmaEquation; set => _sigmaEquation = value; }
+        public List<OptimizationPoint> CurrentPath { get; set; }
+        public string[,] SolutionMatrixOutput { get; set; }
+        public int Sigma { get; set; }
+        public string SigmaEquation { get; set; }
         public string Name { get; set; }
 
-        public SolutionTab(AltSolution altSolution, string name)
+        public SolutionTab(AltSolutionModel altSolution, string name)
         {
             Name = name;
-            A_Solution = altSolution;
-            SolutionMatrixOutput = FillOutputMatrix(A_Solution.FirstSolution);
+            SolutionMatrixOutput = FillOutputMatrix(altSolution.FirstSolution);
 
         }
 
-        public SolutionTab(AltSolution altSolution, string name, int solutionNum, int amount): this(altSolution, name)
+        public SolutionTab(AltSolutionModel altSolution, string name, int solutionNum, int amount): this(altSolution, name)
         {
-            CurrentOptimizationPath = A_Solution.OptimizationList[solutionNum];
-            Sigma = A_Solution.Sigmas[solutionNum];
-            SigmaEquation = A_Solution.SigmaEquations[solutionNum];
+            CurrentPath = altSolution.PathList[solutionNum];
+            Sigma = altSolution.Sigmas[solutionNum];
+            SigmaEquation = altSolution.SigmaEquations[solutionNum];
             ApplySteppingStoneChange(amount);
         }
 
         public void ApplySteppingStoneChange(int amount)
         {
-            for (int i = 0; i < CurrentOptimizationPath.Count; i++)
+            for (int i = 0; i < CurrentPath.Count; i++)
             {
-                SolutionMatrixOutput[CurrentOptimizationPath[i][0], CurrentOptimizationPath[i][1]] += (i % 2 == 0 ? " +" : " -") + amount;
+                SolutionMatrixOutput[CurrentPath[i][0], CurrentPath[i][1]] += (i % 2 == 0 ? " +" : " -") + amount;
             }
         }
 

@@ -72,13 +72,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Constants\CalculationMode.cs" />
+    <Compile Include="Fuzzy\FuzzyNumber.cs" />
+    <Compile Include="Fuzzy\FuzzyOutput.cs" />
     <Compile Include="Graphs\GraphCollection.cs" />
     <Compile Include="Graphs\IGraphData.cs" />
-    <Compile Include="Models\AltSolution.cs" />
-    <Compile Include="Models\CostMatrix.cs" />
+    <Compile Include="Models\AltSolutionModel.cs" />
+    <Compile Include="Models\DataModel.cs" />
     <Compile Include="Graphs\GraphData.cs" />
     <Compile Include="Models\MathAlgorithms.cs" />
-    <Compile Include="Models\MathModel.cs" />
     <Compile Include="Models\OptimizationPoint.cs" />
     <Compile Include="Tabs\GraphTab.cs" />
     <Compile Include="Tabs\ITab.cs" />

@@ -1,77 +1,81 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Controls;
+﻿using System.Windows;
 using DecisionMaking.Models;
 using DecisionMaking.Views;
 using Prism.Mvvm;
-using System.Windows.Input;
 using Prism.Commands;
+using DecisionMaking.Fuzzy;
+using DecisionMaking.Constants;
 
 namespace DecisionMaking.ViewModels
 {
     public class InputViewModel: BindableBase
     {
-        private MathModel _model;
+        private DataModel _dataModel;
         private CalculationViewModel _childViewModel;
         private CalculationView _childView;
-        private int[,] _costMatrixSource;
+
+        private CalculationMode _selectedMode;
+        private int[,] _sourceCostMatrix;
         private int[] _supply;
         private int[] _demand;
 
-        public int[,] CostMatrixSource
+        public CalculationMode SelectedMode
         {
-            get => _costMatrixSource;
-
-            set
-            {
-                SetProperty(ref _costMatrixSource, value);
-            }
+            get => _selectedMode;
+            set => SetProperty(ref _selectedMode, value);
         }
+
+        public int[,] SourceCostMatrix
+        {
+            get => _sourceCostMatrix;
+            set => SetProperty(ref _sourceCostMatrix, value);
+        }
+        
         public int[] Supply
         {
             get => _supply;
-
-            set
-            {
-                SetProperty(ref _supply, value);
-            }
+            set => SetProperty(ref _supply, value);
         }
+
         public int[] Demand
         {
             get => _demand;
-
-            set
-            {
-                SetProperty(ref _demand, value);
-            }
+            set => SetProperty(ref _demand, value);
         }
+
+        public string[,] FuzzyToStringMatrix { get; set; }
+
+        public DelegateCommand<int?> ChangeModeCommand { get; set; }
+        public DelegateCommand CalculateCommand { get; set; }
+        public DelegateCommand ExitCommand { get; set; }
 
         public InputViewModel()
         {
-            _model = new MathModel();
+            _dataModel = new DataModel();
+            SelectedMode = CalculationMode.NonFuzzy;
 
-            CostMatrixSource = _model.C_Matrix.SourceCostMatrix;
-            Supply = _model.C_Matrix.Supply;
-            Demand = _model.C_Matrix.Demand;
+            SourceCostMatrix = _dataModel.SourceCostMatrix;
+            Supply = _dataModel.Supply;
+            Demand = _dataModel.Demand;
+            FuzzyToStringMatrix = FuzzyOutput.GetFuzzyToStringMatrix(_dataModel.FuzzySourceCostMatrix);
 
+            ChangeModeCommand = new DelegateCommand<int?>(ExecuteChangeModeCommand);
             CalculateCommand = new DelegateCommand(ExecuteCalculateCommand, CanExecuteCalculateCommand).
                                    ObservesProperty(() => Supply).
                                    ObservesProperty(() => Demand).
-                                   ObservesProperty(() => CostMatrixSource);
+                                   ObservesProperty(() => SourceCostMatrix);
             ExitCommand = new DelegateCommand(ExecuteExitCommand);
 
 
         }
 
-        public DelegateCommand CalculateCommand { get; set; }
-        public DelegateCommand ExitCommand { get; set; }
-
+        private void ExecuteChangeModeCommand(int? selectedIndex)
+        {
+            if(selectedIndex != null)
+            {
+                SelectedMode = (CalculationMode)selectedIndex; //to be refactored
+            }
+        }
         private bool CanExecuteCalculateCommand()
         {
             //to be implemented
@@ -79,15 +83,18 @@ namespace DecisionMaking.ViewModels
         }
         private void ExecuteCalculateCommand()
         {
-            _childViewModel = new CalculationViewModel(new AltSolution(_model.C_Matrix, 
-                                                           MathAlgorithms.NWAngle(_model.C_Matrix.Supply, 
-                                                                                  _model.C_Matrix.Demand)));
+            CalculationViewModel.SelectedMode = SelectedMode;
+            _childViewModel = new CalculationViewModel(new AltSolutionModel(_dataModel, MathAlgorithms.NWAngle(_dataModel.Supply, _dataModel.Demand)));
             _childView = new CalculationView();
             _childView.DataContext = _childViewModel;
             _childView.ShowDialog();
         }
 
+
         private void ExecuteExitCommand() => Application.Current.Shutdown();
 
+        
     }
+
+
 }
