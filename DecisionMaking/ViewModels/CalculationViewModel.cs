@@ -1,16 +1,16 @@
 ﻿using DecisionMaking.Constants;
 using DecisionMaking.Graphs;
 using DecisionMaking.Models;
+using DecisionMaking.Operations;
 using DecisionMaking.Tabs;
 using DecisionMaking.Views;
 using Prism.Commands;
 using Prism.Mvvm;
-using System;
+using System.Windows;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows;
-
+using DecisionMaking.DataTypes;
 
 namespace DecisionMaking.ViewModels
 {
@@ -27,10 +27,13 @@ namespace DecisionMaking.ViewModels
         public ICollection<ITab> Tabs { get; set; }
         public int[,] FirstSolution { get; set; }
 
-        public int[,] SourceCostMatrix { get; set; }
+        public Number[,] SourceCostMatrix { get; set; }
+        public FuzzyNumber[,] FuzzySourceCostMatrix { get; set; }
+        public DataType Cost { get; set; }
+
         public List<int> Sigmas { get; set; }
         public List<string> SigmaEquations { get; set; }
-        public int Cost { get; set; }
+
 
         public string TitleText
         {
@@ -64,7 +67,7 @@ namespace DecisionMaking.ViewModels
 
 
             _childViewModel = new CalculationViewModel(new AltSolutionModel(_altSolutionModel, 
-                                                                       MathAlgorithms.NewSolution(_altSolutionModel.FirstSolution, 
+                                                                       MathOperations.NewSolution(_altSolutionModel.FirstSolution, 
                                                                                                        _altSolutionModel.PathList[minSigmaIndex])));
             _childView = new CalculationView
             {
@@ -90,15 +93,16 @@ namespace DecisionMaking.ViewModels
 
             SourceCostMatrix = _altSolutionModel.Source.SourceCostMatrix;
             FirstSolution = _altSolutionModel.FirstSolution;
-            Cost = MathAlgorithms.CalculateCost(FirstSolution, SourceCostMatrix);
 
+
+            Cost = MathOperations.CalculateCost(FirstSolution, SourceCostMatrix);
 
             Sigmas = _altSolutionModel.Sigmas;
             SigmaEquations = _altSolutionModel.SigmaEquations;
 
             for (int i = 0; i < _altSolutionModel.PathList.Count; i++)
             {
-                Sigmas.Add(MathAlgorithms.CalculateSigma(_altSolutionModel, i, 1, out string sigmaString));
+                Sigmas.Add(MathOperations.CalculateSigma(_altSolutionModel, i, 1, out string sigmaString));
                 SigmaEquations.Add(sigmaString);
                 Tabs.Add(new SolutionTab(_altSolutionModel, $"E_{StepCount}_{i + 2}", i, 1));
             }

@@ -1,4 +1,5 @@
-﻿using DecisionMaking.Fuzzy;
+﻿using DecisionMaking.DataTypes;
+using DecisionMaking.Operations;
 using System.Collections.Generic;
 
 namespace DecisionMaking.Models
@@ -38,7 +39,7 @@ namespace DecisionMaking.Models
                         continue;
                     }
 
-                    PathList.Add(MathAlgorithms.FindSteppingStonePath(this, i, j));
+                    PathList.Add(MathOperations.FindSteppingStonePath(Source, FirstSolution, i, j));
                 }
             }
         }

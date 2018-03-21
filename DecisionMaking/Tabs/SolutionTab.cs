@@ -5,13 +5,13 @@ namespace DecisionMaking.Tabs
 {
     public class SolutionTab: ITab
     {
-
-        public List<OptimizationPoint> CurrentPath { get; set; }
+        public string Name { get; set; }
         public string[,] SolutionMatrixOutput { get; set; }
+        public List<OptimizationPoint> CurrentPath { get; set; }
+
         public int Sigma { get; set; }
         public string SigmaEquation { get; set; }
-        public string Name { get; set; }
-
+        
         public SolutionTab(AltSolutionModel altSolution, string name)
         {
             Name = name;

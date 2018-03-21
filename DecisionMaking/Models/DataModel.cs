@@ -1,26 +1,28 @@
-﻿using DecisionMaking.Fuzzy;
+﻿using DecisionMaking.DataTypes;
 
 namespace DecisionMaking.Models
 {
     public class DataModel
     {
 
-        public int[,] SourceCostMatrix { get; set; }
+        public Number[,] SourceCostMatrix { get; set; }
         internal FuzzyNumber[,] FuzzySourceCostMatrix { get; set; }
         public int[] Supply { get; set; }
         public int[] Demand { get; set; }
-
+        public double[] ProbabilityDistribution { get; set; }
 
         public DataModel()
         {
             Supply = new int[] { 850, 800, 950 };
             Demand = new int[] { 550, 500, 550, 650, 350 };
-            SourceCostMatrix = new int[3, 5]
+
+            SourceCostMatrix = new Number[3, 5]
             {
                 {4,1,2,7,8},
                 {7,5,3,4,6},
                 {8,4,6,2,5},
             };
+            ProbabilityDistribution = new double[3] { 0.15, 0.8, 0.5 };
             FuzzySourceCostMatrix = new FuzzyNumber[3, 5]
             {
                 { new FuzzyNumber(3,4,6), new FuzzyNumber(1,1,3), new FuzzyNumber(1,2,4),new FuzzyNumber(4,7,10),new FuzzyNumber(7,8,10),},
@@ -42,7 +44,7 @@ namespace DecisionMaking.Models
             //};
         }
 
-        public DataModel(int[,] sourceCostMatrix, int[] supply, int[] demand)
+        public DataModel(Number[,] sourceCostMatrix, int[] supply, int[] demand)
         {
             Supply = supply;
             Demand = demand;

@@ -1,10 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DecisionMaking.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DecisionMaking.Operations;
 
 namespace DecisionMaking.Models.Tests
 {
@@ -25,7 +20,7 @@ namespace DecisionMaking.Models.Tests
             };
 
             //act
-            int[,] actual = MathAlgorithms.NWAngle(supply, demand);
+            int[,] actual = MathOperations.NWAngle(supply, demand);
             //assert
             for(int i = 0; i< actual.GetLength(0); i++)
             {

@@ -3,8 +3,9 @@ using DecisionMaking.Models;
 using DecisionMaking.Views;
 using Prism.Mvvm;
 using Prism.Commands;
-using DecisionMaking.Fuzzy;
 using DecisionMaking.Constants;
+using DecisionMaking.Operations;
+using DecisionMaking.DataTypes;
 
 namespace DecisionMaking.ViewModels
 {
@@ -15,7 +16,7 @@ namespace DecisionMaking.ViewModels
         private CalculationView _childView;
 
         private CalculationMode _selectedMode;
-        private int[,] _sourceCostMatrix;
+        private DataType[,] _sourceCostMatrix;
         private int[] _supply;
         private int[] _demand;
 
@@ -25,7 +26,7 @@ namespace DecisionMaking.ViewModels
             set => SetProperty(ref _selectedMode, value);
         }
 
-        public int[,] SourceCostMatrix
+        public DataType[,] SourceCostMatrix
         {
             get => _sourceCostMatrix;
             set => SetProperty(ref _sourceCostMatrix, value);
@@ -57,7 +58,7 @@ namespace DecisionMaking.ViewModels
             SourceCostMatrix = _dataModel.SourceCostMatrix;
             Supply = _dataModel.Supply;
             Demand = _dataModel.Demand;
-            FuzzyToStringMatrix = FuzzyOutput.GetFuzzyToStringMatrix(_dataModel.FuzzySourceCostMatrix);
+            FuzzyToStringMatrix = FuzzyOperations.GetFuzzyToStringMatrix(_dataModel.FuzzySourceCostMatrix);
 
             ChangeModeCommand = new DelegateCommand<int?>(ExecuteChangeModeCommand);
             CalculateCommand = new DelegateCommand(ExecuteCalculateCommand, CanExecuteCalculateCommand).
@@ -84,7 +85,7 @@ namespace DecisionMaking.ViewModels
         private void ExecuteCalculateCommand()
         {
             CalculationViewModel.SelectedMode = SelectedMode;
-            _childViewModel = new CalculationViewModel(new AltSolutionModel(_dataModel, MathAlgorithms.NWAngle(_dataModel.Supply, _dataModel.Demand)));
+            _childViewModel = new CalculationViewModel(new AltSolutionModel(_dataModel, MathOperations.NWAngle(_dataModel.Supply, _dataModel.Demand)));
             _childView = new CalculationView();
             _childView.DataContext = _childViewModel;
             _childView.ShowDialog();

@@ -1,6 +1,9 @@
-﻿namespace DecisionMaking.Fuzzy
+﻿using DecisionMaking.DataTypes;
+
+
+namespace DecisionMaking.Operations
 {
-    public static class FuzzyOutput
+    public static class FuzzyOperations
     {
 
         public static string[,] GetFuzzyToStringMatrix(FuzzyNumber[,] fuzzyMatrix)
@@ -19,7 +22,7 @@
 
         public static FuzzyNumber CalculateFuzzyCost(int[,] solution, FuzzyNumber[,] fuzzyCostMatrix)
         {
-            FuzzyNumber output = new FuzzyNumber(0, 0, 0);
+            FuzzyNumber output = 0;
 
             if (solution.GetLength(0) != fuzzyCostMatrix.GetLength(0) || solution.GetLength(1) != fuzzyCostMatrix.GetLength(1))
             {
@@ -30,7 +33,7 @@
             {
                 for (int j = 0; j < solution.GetLength(1); j++)
                 {
-                    output += (fuzzyCostMatrix[i, j] * solution[i, j]);
+                    output += (solution[i, j] * fuzzyCostMatrix[i, j]);
                 }
             }
             return output;
