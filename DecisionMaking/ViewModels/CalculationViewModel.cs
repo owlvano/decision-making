@@ -21,15 +21,19 @@ namespace DecisionMaking.ViewModels
         private CalculationViewModel _childViewModel;
 
         public static int StepCount { get; set; } = 0;
-        public static CalculationMode SelectedMode { get; set; } = CalculationMode.NonFuzzy;
+        public static CalculationMode SelectedMode { get; set; } = CalculationMode.Real;
 
 
         public ICollection<ITab> Tabs { get; set; }
         public int[,] FirstSolution { get; set; }
+        public int[] Supply { get; set; }
+        public int[] Demand { get; set; }
 
         public Number[,] SourceCostMatrix { get; set; }
         public FuzzyNumber[,] FuzzySourceCostMatrix { get; set; }
-        public DataType Cost { get; set; }
+        public DataType FirstCost { get; set; }
+
+        public List<FuzzyNumber> FuzzyCosts { get; set; }
 
         public List<int> Sigmas { get; set; }
         public List<string> SigmaEquations { get; set; }
@@ -93,9 +97,11 @@ namespace DecisionMaking.ViewModels
 
             SourceCostMatrix = _altSolutionModel.Source.SourceCostMatrix;
             FirstSolution = _altSolutionModel.FirstSolution;
+            Supply = _altSolutionModel.Source.Supply;
+            Demand = _altSolutionModel.Source.Demand;
 
 
-            Cost = MathOperations.CalculateCost(FirstSolution, SourceCostMatrix);
+            FirstCost = MathOperations.CalculateCost(FirstSolution, SourceCostMatrix);
 
             Sigmas = _altSolutionModel.Sigmas;
             SigmaEquations = _altSolutionModel.SigmaEquations;

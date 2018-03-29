@@ -8,7 +8,7 @@ namespace DecisionMaking.Constants
 {
     public enum CalculationMode
     {
-        NonFuzzy = 0,
+        Real = 0,
         Fuzzy
     }
 }

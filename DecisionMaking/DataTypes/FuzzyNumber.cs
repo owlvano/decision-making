@@ -14,24 +14,25 @@ namespace DecisionMaking.DataTypes
         public int Left { get; set; }
         public int Middle { get; set; }
         public int Right { get; set; }
+        public int[] Numbers { get => _numbers; set => _numbers = value; }
 
         public int this[int i]
         {
-            get => _numbers[i];
-            set => _numbers[i] = value;
+            get => Numbers[i];
+            set => Numbers[i] = value;
         }
 
         public FuzzyNumber(int left, int middle, int right)
         {
-            _numbers = new int[3] { left, middle, right };
-            Left = _numbers[0];
-            Middle = _numbers[1];
-            Right = _numbers[2];
+            Numbers = new int[3] { left, middle, right };
+            Left = Numbers[0];
+            Middle = Numbers[1];
+            Right = Numbers[2];
         }
 
         public override string ToString()
         {
-            return string.Join(_separator.ToString(), _numbers);
+            return string.Join(_separator.ToString(), Numbers);
         }
 
         public bool CheckIntegrity()
@@ -67,21 +68,21 @@ namespace DecisionMaking.DataTypes
                 return 0;
         }
 
-        protected override DataType Add(int intValue)
+        public override DataType Add(int intValue)
         {
             return this + intValue;
         }
 
-        protected override DataType Add(DataType intValue)
+        public override DataType Add(DataType intValue)
         {
             return this + (FuzzyNumber)intValue;
         }
-        protected override DataType Subtract(int intValue)
+        public override DataType Subtract(int intValue)
         {
             return this - intValue;
         }
 
-        protected override DataType Multiply(int intValue)
+        public override DataType Multiply(int intValue)
         {
             return this * intValue;
         }

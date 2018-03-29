@@ -9,6 +9,8 @@ namespace DecisionMaking.DataTypes
     public class Number: DataType
     {
         public int Value { get; set; }
+
+        public Number() : this(0) { }
         public Number(int number)
         {
             Value = number;
@@ -19,22 +21,22 @@ namespace DecisionMaking.DataTypes
             return Value.ToString();
         }
 
-        protected override DataType Add(int intValue)
+        public override DataType Add(int intValue)
         {
             return this + intValue;
         }
 
-        protected override DataType Add(DataType intValue)
+        public override DataType Add(DataType intValue)
         {
             return this + (Number)intValue;
         }
 
-        protected override DataType Subtract(int intValue)
+        public override DataType Subtract(int intValue)
         {
             return this - intValue;
         }
 
-        protected override DataType Multiply(int intValue)
+        public override DataType Multiply(int intValue)
         {
             return this * intValue;
         }

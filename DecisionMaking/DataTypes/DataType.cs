@@ -8,10 +8,10 @@ namespace DecisionMaking.DataTypes
 {
     public abstract class DataType
     {
-        protected abstract DataType Add(int intValue);
-        protected abstract DataType Add(DataType dValue);
-        protected abstract DataType Subtract(int intValue);
-        protected abstract DataType Multiply(int intValue);
+        public abstract DataType Add(int intValue);
+        public abstract DataType Add(DataType dValue);
+        public abstract DataType Subtract(int intValue);
+        public abstract DataType Multiply(int intValue);
 
 
 

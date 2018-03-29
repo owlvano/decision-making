@@ -53,12 +53,12 @@ namespace DecisionMaking.ViewModels
         public InputViewModel()
         {
             _dataModel = new DataModel();
-            SelectedMode = CalculationMode.NonFuzzy;
+            SelectedMode = CalculationMode.Real;
 
             SourceCostMatrix = _dataModel.SourceCostMatrix;
             Supply = _dataModel.Supply;
             Demand = _dataModel.Demand;
-            FuzzyToStringMatrix = FuzzyOperations.GetFuzzyToStringMatrix(_dataModel.FuzzySourceCostMatrix);
+            FuzzyToStringMatrix = OutputOperations.GetFuzzyToStringMatrix(_dataModel.FuzzySourceCostMatrix);
 
             ChangeModeCommand = new DelegateCommand<int?>(ExecuteChangeModeCommand);
             CalculateCommand = new DelegateCommand(ExecuteCalculateCommand, CanExecuteCalculateCommand).

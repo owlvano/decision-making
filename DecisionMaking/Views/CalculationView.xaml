@@ -28,12 +28,18 @@
                 <Label Name ="first_solution_label">
                     <Run Text="{Binding FirstSolutionContent, Mode=OneWay}" />
                 </Label>
-                    <dg2d:DataGrid2D Name="solution_dataGrid2D" ItemsSource2D="{Binding FirstSolution}" IsReadOnly="True"/>
+                <dg2d:DataGrid2D Name="solution_dataGrid2D" ItemsSource2D="{Binding FirstSolution}" IsReadOnly="True">
+                    <!--<DataGrid.RowHeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DataContext.Supply[0], RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}"/>
+                        </DataTemplate>
+                    </DataGrid.RowHeaderTemplate>-->
+                </dg2d:DataGrid2D>
             </WrapPanel>
         </WrapPanel>
         <WrapPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Label Name="cost_label" Content="Z = "/>
-            <Label Name="cost_content_label" Content="{Binding Cost}"/>
+            <Label Name="cost_content_label" Content="{Binding FirstCost}"/>
         </WrapPanel>
         <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right">
             <Button Name="calculate_Btn" Content="Move to next step" Margin="10" Padding="5" Command="{Binding NextStepCommand}" />

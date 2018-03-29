@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DecisionMaking.Operations
 {
-    public static class MathOperations
+    public static partial class MathOperations
     {
 
         #region North-Western Angle
@@ -133,9 +133,9 @@ namespace DecisionMaking.Operations
         #endregion
 
         #region CalculateCost
-        public static Number CalculateCost(int[,] solution, Number[,] costMatrix)
+        public static T CalculateCost<T>(int[,] solution, T[,] costMatrix) where T : DataType
         {
-            Number output = 0;
+            T output = Activator.CreateInstance<T>();
 
             if (solution.GetLength(0) != costMatrix.GetLength(0) || solution.GetLength(1) != costMatrix.GetLength(1))
             {
@@ -145,11 +145,12 @@ namespace DecisionMaking.Operations
             {
                 for (int j = 0; j < solution.GetLength(1); j++)
                 {
-                    output += solution[i, j] * costMatrix[i, j];
+                    output = (T)output.Add((T)costMatrix[i, j].Multiply(solution[i, j]));
                 }
             }
             return output;
         }
+
 
 
         #endregion
@@ -175,7 +176,7 @@ namespace DecisionMaking.Operations
         }
         #endregion
 
-        #region Operations
+        #region Stepping stone elements' operations
         public static int Addition(int x, int y)
         {
             return x + y;
