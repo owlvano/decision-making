@@ -1,30 +1,20 @@
 ﻿using DecisionMaking.Models;
+using DecisionMaking.Operations;
 using System.Collections.Generic;
 
 namespace DecisionMaking.Tabs
 {
-    public class SolutionTab: ITab
+    public abstract class SolutionTab: ITab
     {
         public string Name { get; set; }
         public string[,] SolutionMatrixOutput { get; set; }
         public List<OptimizationPoint> CurrentPath { get; set; }
 
-        public int Sigma { get; set; }
-        public string SigmaEquation { get; set; }
-        
-        public SolutionTab(AltSolutionModel altSolution, string name)
+        public SolutionTab(AltSolutionModel altSolutionModel, string name)
         {
             Name = name;
-            SolutionMatrixOutput = FillOutputMatrix(altSolution.FirstSolution);
+            SolutionMatrixOutput = FillOutputMatrix(altSolutionModel.FirstSolution);
 
-        }
-
-        public SolutionTab(AltSolutionModel altSolution, string name, int solutionNum, int amount): this(altSolution, name)
-        {
-            CurrentPath = altSolution.PathList[solutionNum];
-            Sigma = altSolution.Sigmas[solutionNum];
-            SigmaEquation = altSolution.SigmaEquations[solutionNum];
-            ApplySteppingStoneChange(amount);
         }
 
         public void ApplySteppingStoneChange(int amount)

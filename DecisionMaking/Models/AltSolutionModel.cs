@@ -15,11 +15,14 @@ namespace DecisionMaking.Models
         public List<string> SigmaEquations { get; set; }
 
         public List<FuzzyNumber> FuzzyCosts { get; set; }
+        public FuzzyNumber FirstFuzzyCost { get; set; }
 
         private AltSolutionModel()
         {
             Sigmas = new List<int>();
             SigmaEquations = new List<string>();
+            FuzzyCosts = new List<FuzzyNumber>();
+            FirstFuzzyCost = 0;
         }
 
         public AltSolutionModel(DataModel source, int[,] firstSolution): this()
@@ -38,15 +41,16 @@ namespace DecisionMaking.Models
                     {
                         continue;
                     }
+                    List<OptimizationPoint> currList = MathOperations.FindSteppingStonePath(Source, FirstSolution, i, j);
+                    if (currList != null)
+                    {
+                        PathList.Add(currList);
+                    }
 
-                    PathList.Add(MathOperations.FindSteppingStonePath(Source, FirstSolution, i, j));
                 }
             }
         }
 
-        public AltSolutionModel(AltSolutionModel parent, int[,] firstSolution): this(parent.Source, firstSolution)
-        {
-   
-        }
+        public AltSolutionModel(AltSolutionModel parent, int[,] newFirstSolution): this(parent.Source, newFirstSolution) { }
     }
 }

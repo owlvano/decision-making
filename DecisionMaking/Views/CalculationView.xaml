@@ -4,20 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:DecisionMaking.Views"
+        
+        xmlns:vm="clr-namespace:DecisionMaking.ViewModels"
         xmlns:tabs="clr-namespace:DecisionMaking.Tabs"
         xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Name="calc_window"
         Title="{Binding TitleText}"
-        Height="600" Width="525">
-    
+        Height="675" Width="600">
+
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding ClosingWindowCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-     
     <DockPanel>
         <WrapPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal"  Margin="10">
             <WrapPanel Orientation="Vertical" Margin="10">
@@ -28,13 +29,7 @@
                 <Label Name ="first_solution_label">
                     <Run Text="{Binding FirstSolutionContent, Mode=OneWay}" />
                 </Label>
-                <dg2d:DataGrid2D Name="solution_dataGrid2D" ItemsSource2D="{Binding FirstSolution}" IsReadOnly="True">
-                    <!--<DataGrid.RowHeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding DataContext.Supply[0], RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGrid}}}"/>
-                        </DataTemplate>
-                    </DataGrid.RowHeaderTemplate>-->
-                </dg2d:DataGrid2D>
+                <dg2d:DataGrid2D Name="solution_dataGrid2D" ItemsSource2D="{Binding FirstSolution}" IsReadOnly="True"/>
             </WrapPanel>
         </WrapPanel>
         <WrapPanel DockPanel.Dock="Top" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -45,13 +40,19 @@
             <Button Name="calculate_Btn" Content="Move to next step" Margin="10" Padding="5" Command="{Binding NextStepCommand}" />
         </WrapPanel>
         <TabControl TabStripPlacement="Bottom" ItemsSource="{Binding Tabs}">
-            
+
             <TabControl.Resources>
-                <DataTemplate DataType="{x:Type tabs:SolutionTab}">
-                    <local:SolutionTabView />
+                <DataTemplate DataType="{x:Type vm:RealSolutionTabVM}">
+                    <local:RealSolutionTabView />
                 </DataTemplate>
-                <DataTemplate DataType="{x:Type tabs:GraphTab}">
+                <DataTemplate DataType="{x:Type vm:GraphTabVM}">
                     <local:GraphTabView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:FuzzySolutionTabVM}">
+                    <local:FuzzySolutionTabView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:FuzzyCriteriasTabVM}">
+                    <local:FuzzyCriteriasTabView/>
                 </DataTemplate>
             </TabControl.Resources>
             
@@ -65,12 +66,5 @@
             
         </TabControl>
         
-        <!--<WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
-            <Label Name ="matrix_label" Content="Solution"/>
-            <dg2d:DataGrid2D 
-                Name="matrix_dataGrid2D"
-                IsReadOnly="True"
-                ItemsSource2D="{Binding FirstSolution}"/>
-        </WrapPanel>-->
     </DockPanel>
 </Window>

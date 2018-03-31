@@ -12,9 +12,9 @@
              d:DesignHeight="300" d:DesignWidth="600">
     
     <UserControl.DataContext>
-        <vm:InputViewModel />
+        <vm:InputVM />
     </UserControl.DataContext>
-    
+
     <UserControl.Resources>
         <ObjectDataProvider x:Key="calc_Mode_List"
                             MethodName="GetValues" 
@@ -28,38 +28,31 @@
     <DockPanel>
         <StackPanel DockPanel.Dock="Left" HorizontalAlignment="Center" VerticalAlignment="Center">
             <WrapPanel Margin="10" Orientation="Vertical" HorizontalAlignment="Center">
-                <Label Name ="supply_label" Content="Supply"/>
-                <dg2d:DataGrid2D Name="supply_dataGrid2D"
+                <Label Name ="supply_label" Content="Supply"  HorizontalAlignment="Center"/>
+                <dg2d:DataGrid2D Name="supply_dataGrid2D"  HorizontalAlignment="Center"
                 ItemsSource2D="{Binding Supply}"/>
             </WrapPanel>
-
             <WrapPanel Margin="10" Orientation="Vertical"  HorizontalAlignment="Center">
-                <Label Name ="demand_label" Content="Demand"/>
-                <dg2d:DataGrid2D Name="demand_dataGrid2D"
+                <Label Name ="demand_label" Content="Demand"  HorizontalAlignment="Center"/>
+                <dg2d:DataGrid2D Name="demand_dataGrid2D"  HorizontalAlignment="Center"
                  ItemsSource2D="{Binding Demand}"/>
             </WrapPanel>
         </StackPanel>
         <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right">
             <ComboBox Name="mode_listbox" Margin="10" Padding="5" ItemsSource="{Binding Source={StaticResource calc_Mode_List}}" SelectedIndex="0" >
-                
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
                         <i:InvokeCommandAction Command="{Binding ChangeModeCommand}" CommandParameter="{Binding ElementName=mode_listbox, Path=SelectedIndex}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                
             </ComboBox>
             <Button Name="calculate_Btn" Content="Calculate" Margin="10" Padding="5" Command="{Binding CalculateCommand}" />
             <Button Name="exit_Btn" Content="Exit" Margin="10" Padding="5" Command="{Binding ExitCommand}"/>
         </WrapPanel>
-        <WrapPanel DockPanel.Dock="Right" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
-            <Label Name ="fuzzy_matrix_label" Content="Fuzzy Cost Matrix" />
-            <dg2d:DataGrid2D Name="fuzzy_matrix_dataGrid2D" IsReadOnly="True"
-                 ItemsSource2D="{Binding FuzzyToStringMatrix}"/>
-        </WrapPanel>
+        
         <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
-            <Label Name ="matrix_label" Content="Cost Matrix"/>
-            <dg2d:DataGrid2D Name="matrix_dataGrid2D"
+            <Label Name ="matrix_label" Content="Cost Matrix"  HorizontalAlignment="Center"/>
+            <dg2d:DataGrid2D Name="matrix_dataGrid2D"  HorizontalAlignment="Center"
                  ItemsSource2D="{Binding SourceCostMatrix}"/>
         </WrapPanel>
     </DockPanel>

@@ -22,6 +22,7 @@ namespace DecisionMaking.DataTypes
             set => Numbers[i] = value;
         }
 
+        public FuzzyNumber() : this(0, 0, 0) { }
         public FuzzyNumber(int left, int middle, int right)
         {
             Numbers = new int[3] { left, middle, right };

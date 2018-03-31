@@ -63,12 +63,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DecisionMaking\DecisionMaking.csproj">
-      <Project>{6F3664A1-A049-4AAF-BBC7-ABAE8A2352C6}</Project>
-      <Name>DecisionMaking</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

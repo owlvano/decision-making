@@ -2,19 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DecisionMaking.Operations
 {
     public static partial class MathOperations
     {
         #region MinMax
-        public static double[,] minMaxCriteria(List<FuzzyNumber> costsList, ref string[] headers, ref int solutionIndex, double[] probDistr = null, double adjParam = 0)
+        public static int minMaxCriteria(List<FuzzyNumber> costsList, string[,] output, double[] probDistr = null, double adjParam = 0)
         {
             double[,] solutionMatrix = new double[costsList.Count, 2];
-            solutionIndex = -1;
-            headers = new string[2] {"Eir = min(j) Eij", "Z = max(i) Eir"};
+            int solutionIndex = -1;
+            string[] headers = new string[2] {"Eir = min(j) Eij", "Z = max(i) Eir"};
 
             for (int i=0; i < costsList.Count; i++)
             {
@@ -33,16 +31,17 @@ namespace DecisionMaking.Operations
                 }
             }
 
-            return solutionMatrix;
+            output = GetCriteriaOutput(headers, solutionMatrix);
+            return solutionIndex;
         }
         #endregion
-
+       
         #region Bayes-Laplas
-        public static double[,] BLCriteria(List<FuzzyNumber> costsList, ref string[] headers, ref int solutionIndex, double[] probDistr, double adjParam = 0)
+        public static int BLCriteria(List<FuzzyNumber> costsList, string[,] output, double[] probDistr, double adjParam = 0)
         {
             double[,] solutionMatrix = new double[costsList.Count, 2];
-            solutionIndex = -1;
-            headers = new string[2] { "Eir = Σ(j) Eij * Qj", "Z = max(i) Eir" };
+            int solutionIndex = -1;
+            string[] headers = new string[2] { "Eir = Σ(j) Eij * Qj", "Z = max(i) Eir" };
 
             for (int i = 0; i < costsList.Count; i++)
             {
@@ -63,16 +62,18 @@ namespace DecisionMaking.Operations
                     solutionMatrix[i, 1] = solutionMatrix[i, 0];
                 }
             }
-            return solutionMatrix;
+
+            output = GetCriteriaOutput(headers, solutionMatrix);
+            return solutionIndex;
         }
         #endregion
 
         #region Savage
-        public static double[,] SavageWinCriteria(List<FuzzyNumber> costsList, ref string[] headers, ref int solutionIndex, double[] probDistr=null, double adjParam = 0)
+        public static int SavageWinCriteria(List<FuzzyNumber> costsList, string[,] output, double[] probDistr=null, double adjParam = 0)
         {
             double[,] solutionMatrix = new double[costsList.Count, 5];
-            solutionIndex = -1;
-            headers = new string[5] { "A1","A2", "A3", "Eir = max(j) Aij", "Z = min(i) Eir" };
+            int solutionIndex = -1;
+            string[] headers = new string[5] { "A1","A2", "A3", "Eir = max(j) Aij", "Z = min(i) Eir" };
 
             for (int j = 0; j < 3; j++)
             {
@@ -102,16 +103,18 @@ namespace DecisionMaking.Operations
                     solutionMatrix[i, 4] = solutionMatrix[i, 0];
                 }
             }
-            return solutionMatrix;
+
+            output = GetCriteriaOutput(headers, solutionMatrix);
+            return solutionIndex;
         }
         #endregion
 
         #region Hurwitz
-        public static double[,] HurwitzCriteria(List<FuzzyNumber> costsList, ref string[] headers, ref int solutionIndex, double[] probDistr = null, double adjParam = 0.5)
+        public static int HurwitzCriteria(List<FuzzyNumber> costsList, string[,] output, double[] probDistr = null, double adjParam = 0.5)
         {
             double[,] solutionMatrix = new double[costsList.Count, 4];
-            solutionIndex = -1;
-            headers = new string[4] { "A=C*min(j) Eij", "B=(1-C)*max(j) Eij", "Eir=A+B", "Z = max(i) Eir" };
+            int solutionIndex = -1;
+            string[] headers = new string[4] { "A=C*min(j) Eij", "B=(1-C)*max(j) Eij", "Eir=A+B", "Z = max(i) Eir" };
 
             for (int i = 0; i < costsList.Count; i++)
             {
@@ -132,17 +135,18 @@ namespace DecisionMaking.Operations
                 }
             }
 
-            return solutionMatrix;
+            output = GetCriteriaOutput(headers, solutionMatrix);
+            return solutionIndex;
         }
         #endregion
 
         #region HL
 
-        public static double[,] HLCriteria(List<FuzzyNumber> costsList, ref string[] headers, ref int solutionIndex, double[] probDistr, double adjParam)
+        public static int HLCriteria(List<FuzzyNumber> costsList, string[,] output, double[] probDistr, double adjParam)
         {
             double[,] solutionMatrix = new double[costsList.Count, 4];
-            solutionIndex = -1;
-            headers = new string[4] { "A = ν * Σ(j) Eij * Qj", "B = (1-ν) * min(j) Eij * Qj", "Eir=A+B", "Z = max(i) Eir" };
+            int solutionIndex = -1;
+            string[] headers = new string[4] { "A = ν * Σ(j) Eij * Qj", "B = (1-ν) * min(j) Eij * Qj", "Eir=A+B", "Z = max(i) Eir" };
 
             for (int i = 0; i < costsList.Count; i++)
             {
@@ -168,12 +172,13 @@ namespace DecisionMaking.Operations
                 }
             }
 
-            return solutionMatrix;
+            output = GetCriteriaOutput(headers, solutionMatrix);
+            return solutionIndex;
         }
         #endregion
 
         #region Germeyer
-        public static double[,] GermeyerCriteria(List<FuzzyNumber> costsList, ref string[] headers, ref int solutionIndex, double[] probDistr, double adjParam = 0)
+        public static int GermeyerCriteria(List<FuzzyNumber> costsList, string[,] output, double[] probDistr, double adjParam = 0)
         {
             double[,] baseMatrix = new double[costsList.Count, 3];
 
@@ -197,8 +202,8 @@ namespace DecisionMaking.Operations
             }
 
             double[,] solutionMatrix = new double[costsList.Count, 5];
-            solutionIndex = -1;
-            headers = new string[5] { "Ej1(+A)", "Ej2(+A)", "Ej3(+A)", "Eir = min(j) Eij * Qj", "Z = max(i) Eir" };
+            int solutionIndex = -1;
+            string[] headers = new string[5] { "Ej1(+A)", "Ej2(+A)", "Ej3(+A)", "Eir = min(j) Eij * Qj", "Z = max(i) Eir" };
 
             for (int i = 0; i < costsList.Count; i++)
             {
@@ -222,12 +227,13 @@ namespace DecisionMaking.Operations
                 }
             }
 
-            return solutionMatrix;
+            output = GetCriteriaOutput(headers, solutionMatrix);
+            return solutionIndex;
         }
         #endregion
 
         #region Multiplication
-        public static double[,] MultiplicationCriteria(List<FuzzyNumber> costsList, ref string[] headers, ref int solutionIndex, double[] probDistr = null, double adjParam = 0)
+        public static int MultiplicationCriteria(List<FuzzyNumber> costsList, string[,] output, double[] probDistr = null, double adjParam = 0)
         {
             double[,] baseMatrix = new double[costsList.Count, 3];
 
@@ -251,8 +257,8 @@ namespace DecisionMaking.Operations
             }
 
             double[,] solutionMatrix = new double[costsList.Count, 5];
-            solutionIndex = -1;
-            headers = new string[5] { "Ej1(+A)", "Ej2(+A)", "Ej3(+A)", "Eir = П(j) Eij", "Z = max(i) Eir" };
+            int solutionIndex = -1;
+            string[] headers = new string[5] { "Ej1(+A)", "Ej2(+A)", "Ej3(+A)", "Eir = П(j) Eij", "Z = max(i) Eir" };
 
             for (int i = 0; i < costsList.Count; i++)
             {
@@ -276,10 +282,35 @@ namespace DecisionMaking.Operations
                 }
             }
 
-            return solutionMatrix;
+            output = GetCriteriaOutput(headers, solutionMatrix);
+            return solutionIndex;
         }
 
         #endregion
 
+        #region Criteria output
+        public static string[,] GetCriteriaOutput(string[] headers, double[,] data)
+        {
+            if (headers.Length != data.GetLength(1))
+            {
+                return null;
+            }
+
+            string[,] output = new string[data.GetLength(0) + 1, data.GetLength(1)];
+
+            for (int j = 0; j < output.GetLength(1); j++)
+            {
+                output[0, j] = headers[j];
+
+                for (int i = 0; i < data.GetLength(0); i++)
+                {
+                    output[i + 1, j] = data[i, j].ToString();
+                }
+
+            }
+
+            return output;
+        }
+        #endregion
     }
 }

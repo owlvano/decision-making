@@ -57,7 +57,8 @@ namespace DecisionMaking.Operations
             if (!LookHorizontally(dataModel, originalSolution, aPath, u, v, u, v))
             {
                 //to be refactored
-                throw new Exception("Incorrect stepping stone input");
+                return null;
+                //throw new Exception("Incorrect stepping stone input");
             }
 
             for (int i = 0; i < aPath.Count; i++)
@@ -113,17 +114,16 @@ namespace DecisionMaking.Operations
         #endregion
 
         #region Calculate sigma
-        public static int CalculateSigma(AltSolutionModel aSolution, int solutionNum, int amount, out string equation)
+        public static int CalculateSigma(AltSolutionModel aSolution, List<OptimizationPoint> CurrentOptimizationPath, int amount, out string equation)
         {
             int sigma = 0;
             equation = "0";
 
-            List<OptimizationPoint> CurrentOptimizationPath = aSolution.PathList[solutionNum];
 
             for (int i = 0; i < CurrentOptimizationPath.Count; i++)
             {
-                sigma = CurrentOptimizationPath[i].OperationDelegate(sigma, amount * aSolution.Source.SourceCostMatrix[CurrentOptimizationPath[i][0], CurrentOptimizationPath[i][1]].Value);
-                equation += ((CurrentOptimizationPath[i].OperationDelegate == Addition) ? "+" : "-") + aSolution.Source.SourceCostMatrix[CurrentOptimizationPath[i][0], CurrentOptimizationPath[i][1]].ToString();
+                sigma = CurrentOptimizationPath[i].OperationDelegate(sigma, amount * aSolution.Source.RealSourceCostMatrix[CurrentOptimizationPath[i][0], CurrentOptimizationPath[i][1]].Value);
+                equation += ((CurrentOptimizationPath[i].OperationDelegate == Addition) ? "+" : "-") + aSolution.Source.RealSourceCostMatrix[CurrentOptimizationPath[i][0], CurrentOptimizationPath[i][1]].ToString();
             }
             equation += "=";
 
@@ -159,6 +159,16 @@ namespace DecisionMaking.Operations
         public static int[,] NewSolution(int[,] originalSolution, List<OptimizationPoint> adjustmentList)
         {
             int[,] finalRoute = originalSolution.Clone() as int[,];
+            int adjustmentAmount = FindMinAdjustment(finalRoute, adjustmentList);
+            foreach (OptimizationPoint i in adjustmentList)
+            {
+                finalRoute[i[0], i[1]] = i.OperationDelegate(finalRoute[i[0], i[1]], adjustmentAmount);
+            }
+            return finalRoute;
+        }
+
+        public static int FindMinAdjustment(int[,] originalSolution, List<OptimizationPoint> adjustmentList)
+        {
             List<int> subtrList = new List<int>();
             foreach (OptimizationPoint i in adjustmentList)
             {
@@ -167,12 +177,7 @@ namespace DecisionMaking.Operations
                     subtrList.Add(originalSolution[i[0], i[1]]);
                 }
             }
-            int adjustmentAmount = subtrList.Min();
-            foreach (OptimizationPoint i in adjustmentList)
-            {
-                finalRoute[i[0], i[1]] = i.OperationDelegate(finalRoute[i[0], i[1]], adjustmentAmount);
-            }
-            return finalRoute;
+            return subtrList.Min();
         }
         #endregion
 

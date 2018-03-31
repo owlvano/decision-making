@@ -49,6 +49,12 @@
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.2.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="OxyPlot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Core.1.0.0\lib\net45\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Wpf.1.0.0\lib\net45\OxyPlot.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Prism, Version=6.3.0.0, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.6.3.0\lib\net45\Prism.dll</HintPath>
     </Reference>
@@ -81,7 +87,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BindingHelper\BindingProxy.cs" />
     <Compile Include="Constants\CalculationMode.cs" />
     <Compile Include="DataTypes\DataType.cs" />
     <Compile Include="DataTypes\FuzzyNumber.cs" />
@@ -93,15 +98,23 @@
     <Compile Include="Graphs\GraphData.cs" />
     <Compile Include="Models\OptimizationPoint.cs" />
     <Compile Include="Operations\Criterias.cs" />
-    <Compile Include="Operations\OutputOperations.cs" />
     <Compile Include="Operations\MathOperations.cs" />
-    <Compile Include="Tabs\GraphTab.cs" />
+    <Compile Include="ViewModels\FuzzyCriteriasTabVM.cs" />
+    <Compile Include="ViewModels\FuzzySolutionTabVM.cs" />
+    <Compile Include="ViewModels\GraphTabVM.cs" />
     <Compile Include="Tabs\ITab.cs" />
+    <Compile Include="ViewModels\RealSolutionTabVM.cs" />
     <Compile Include="Tabs\SolutionTab.cs" />
-    <Compile Include="ViewModels\CalculationViewModel.cs" />
-    <Compile Include="ViewModels\InputViewModel.cs" />
+    <Compile Include="ViewModels\CalculationVM.cs" />
+    <Compile Include="ViewModels\InputVM.cs" />
     <Compile Include="Views\CalculationView.xaml.cs">
       <DependentUpon>CalculationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FuzzyCriteriasTabView.xaml.cs">
+      <DependentUpon>FuzzyCriteriasTabView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FuzzySolutionTabView.xaml.cs">
+      <DependentUpon>FuzzySolutionTabView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GraphTabView.xaml.cs">
       <DependentUpon>GraphTabView.xaml</DependentUpon>
@@ -109,8 +122,8 @@
     <Compile Include="Views\InputView.xaml.cs">
       <DependentUpon>InputView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SolutionTabView.xaml.cs">
-      <DependentUpon>SolutionTabView.xaml</DependentUpon>
+    <Compile Include="Views\RealSolutionTabView.xaml.cs">
+      <DependentUpon>RealSolutionTabView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -128,6 +141,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\FuzzyCriteriasTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FuzzySolutionTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GraphTabView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -136,7 +157,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SolutionTabView.xaml">
+    <Page Include="Views\RealSolutionTabView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
