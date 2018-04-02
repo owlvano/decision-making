@@ -19,6 +19,7 @@ namespace DecisionMaking.ViewModels
         private DataType[,] _sourceCostMatrix;
         private int[] _supply;
         private int[] _demand;
+        private double[] _probDistr;
 
         public CalculationMode SelectedMode
         {
@@ -44,9 +45,16 @@ namespace DecisionMaking.ViewModels
             set => SetProperty(ref _demand, value);
         }
 
+        public double[] ProbDistr
+        {
+            get => _probDistr;
+            set => SetProperty(ref _probDistr, value);
+        }
+
         public DelegateCommand<int?> ChangeModeCommand { get; set; }
         public DelegateCommand CalculateCommand { get; set; }
         public DelegateCommand ExitCommand { get; set; }
+
 
         public InputVM()
         {
@@ -56,6 +64,7 @@ namespace DecisionMaking.ViewModels
             SourceCostMatrix = _dataModel.RealSourceCostMatrix;
             Supply = _dataModel.Supply;
             Demand = _dataModel.Demand;
+            ProbDistr = _dataModel.ProbabilityDistribution;
 
             ChangeModeCommand = new DelegateCommand<int?>(ExecuteChangeModeCommand);
             CalculateCommand = new DelegateCommand(ExecuteCalculateCommand, CanExecuteCalculateCommand).

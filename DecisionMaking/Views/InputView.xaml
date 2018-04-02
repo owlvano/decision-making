@@ -8,6 +8,7 @@
              xmlns:const="clr-namespace:DecisionMaking.Constants"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
+             xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600">
     
@@ -36,6 +37,11 @@
                 <Label Name ="demand_label" Content="Demand"  HorizontalAlignment="Center"/>
                 <dg2d:DataGrid2D Name="demand_dataGrid2D"  HorizontalAlignment="Center"
                  ItemsSource2D="{Binding Demand}"/>
+            </WrapPanel>
+            <WrapPanel Margin="10" Orientation="Vertical"  HorizontalAlignment="Center">
+                <Label Name ="prob_label" Content="Probability Distribuition"  HorizontalAlignment="Center"/>
+                <dg2d:DataGrid2D Name="prob_dataGrid2D"  HorizontalAlignment="Center"
+                 ItemsSource2D="{Binding ProbDistr}"/>
             </WrapPanel>
         </StackPanel>
         <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right">

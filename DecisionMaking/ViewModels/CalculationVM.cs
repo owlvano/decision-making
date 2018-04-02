@@ -24,7 +24,7 @@ namespace DecisionMaking.ViewModels
         private CalculationVM _childViewModel;
 
         private int _nextStepIndex;
-        private int _NextStepIndex
+        public int NextStepIndex                 //to be refactored(fuzzy binding)
         {
             get => _nextStepIndex;
             set => SetProperty(ref _nextStepIndex, value);
@@ -66,7 +66,7 @@ namespace DecisionMaking.ViewModels
         private CalculationVM()
         {
             StepCount++;
-            _NextStepIndex = -1;
+            NextStepIndex = -1;
 
             _calculationDictionary = new Dictionary<CalculationMode, Action>() {
                 { CalculationMode.Real,  RealNumberCalculation },
@@ -74,7 +74,7 @@ namespace DecisionMaking.ViewModels
             };
 
             ClosingWindowCommand = new DelegateCommand(ExecuteClosingWindowCommand);
-            NextStepCommand = new DelegateCommand(ExecuteNextStepCommand, CanExecuteNextStepCommand).ObservesProperty(() => _NextStepIndex);
+            NextStepCommand = new DelegateCommand(ExecuteNextStepCommand, CanExecuteNextStepCommand).ObservesProperty(() => NextStepIndex);
 
 
             Tabs = new ObservableCollection<ITab>();
@@ -108,7 +108,7 @@ namespace DecisionMaking.ViewModels
         {
             _childViewModel = new CalculationVM(new AltSolutionModel(_altSolutionModel,
                                                                        MathOperations.NewSolution(_altSolutionModel.FirstSolution,
-                                                                                                  _altSolutionModel.PathList[_NextStepIndex])));
+                                                                                                  _altSolutionModel.PathList[NextStepIndex])));
             _childView = new CalculationView
             {
                 DataContext = _childViewModel
@@ -119,7 +119,7 @@ namespace DecisionMaking.ViewModels
 
         private bool CanExecuteNextStepCommand()
         {
-            return _NextStepIndex >= 0;
+            return NextStepIndex >= 0;
         }
 
         #endregion
@@ -148,7 +148,7 @@ namespace DecisionMaking.ViewModels
 
             Tabs.Add(new GraphTabVM($"Sigma graph", collection));
 
-            _NextStepIndex = RealNumberNextStepIndex(_sigmas);
+            NextStepIndex = RealNumberNextStepIndex(_sigmas);
         }
 
         private void FuzzyNumberCalculation()
@@ -167,6 +167,8 @@ namespace DecisionMaking.ViewModels
             {
                 _fuzzyCosts.Add(i.CurrentCost);
             }
+
+            Tabs.Add(new FuzzyCriteriasTabVM("Criteria tab",_fuzzyCosts, _altSolutionModel.Source.ProbabilityDistribution, this));
         }
 
         private int RealNumberNextStepIndex(List<int> sigmas)

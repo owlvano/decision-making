@@ -28,12 +28,13 @@ D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\bin\
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\bin\Release\Prism.xml
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\bin\Release\Prism.Wpf.xml
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\bin\Release\System.Windows.Controls.DataVisualization.Toolkit.xml
+D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\Views\FuzzyCriteriasTabView.baml
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\Views\FuzzySolutionTabView.baml
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\Views\GraphTabView.baml
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\Views\RealSolutionTabView.baml
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\MainWindow.g.cs
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\Views\CalculationView.g.cs
-D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\Views\CriteriasTabView.g.cs
+D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\Views\FuzzyCriteriasTabView.g.cs
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\Views\FuzzySolutionTabView.g.cs
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\Views\GraphTabView.g.cs
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\Views\InputView.g.cs
@@ -45,7 +46,6 @@ D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\DecisionMaking_MarkupCompile.lref
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\MainWindow.baml
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\Views\CalculationView.baml
-D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\Views\CriteriasTabView.baml
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\Views\InputView.baml
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\DecisionMaking.g.resources
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\DecisionMaking.Properties.Resources.resources

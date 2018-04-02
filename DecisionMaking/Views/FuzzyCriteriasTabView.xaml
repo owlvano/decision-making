@@ -3,10 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:DecisionMaking.Views"
+             xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
+             xmlns:gl="clr-namespace:System.Globalization;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
-    </Grid>
+    <DockPanel>
+        <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right" >
+            <StackPanel IsEnabled="{Binding IsAddDataEnabled}" Orientation="Horizontal"  Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label Margin="10 0" Name="add_Value_Label" Content="Additional parameter"/>
+                <TextBox Padding="5" Name="add_Value_TextBox"   Text="{Binding Path=AdjParam, StringFormat=n1, ConverterCulture={x:Static gl:CultureInfo.CurrentCulture}}" />
+            </StackPanel>
+            <ComboBox Name="criteria_Listbox" Margin="10" Padding="5" ItemsSource="{Binding CriteriaDictionary}" DisplayMemberPath="Key" SelectedValuePath="Value" SelectedValue="{Binding ChosenCriteria}" SelectedIndex="0" />
+            <Button Name="calculate_Btn" Content="Calculate" Margin="10" Padding="5" Command="{Binding CalculateCommand}" />
+        </WrapPanel>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <StackPanel Margin="10" Orientation="Vertical" HorizontalAlignment="Center">
+                <Label Name ="costs_Label" Content="Costs"  HorizontalAlignment="Center"/>
+                <dg2d:DataGrid2D Name="costs_DataGrid2D"  HorizontalAlignment="Center"
+                    ItemsSource2D="{Binding CostsDataOutput}" IsReadOnly="True"/>
+            </StackPanel>
+            <StackPanel Margin="10" Orientation="Vertical"  HorizontalAlignment="Center">
+                <Label Name ="result_Label" Content="Criteria result"  HorizontalAlignment="Center"/>
+                <dg2d:DataGrid2D Name="result_DataGrid2D"  HorizontalAlignment="Center"
+                     ItemsSource2D="{Binding CalculationDataOutput}" IsReadOnly="True"/>
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
 </UserControl>

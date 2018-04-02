@@ -8,7 +8,7 @@ namespace DecisionMaking.Operations
     public static partial class MathOperations
     {
         #region MinMax
-        public static int minMaxCriteria(List<FuzzyNumber> costsList, string[,] output, double[] probDistr = null, double adjParam = 0)
+        public static int minMaxCriteria(List<FuzzyNumber> costsList, out string[,] output, double[] probDistr = null, double adjParam = 0)
         {
             double[,] solutionMatrix = new double[costsList.Count, 2];
             int solutionIndex = -1;
@@ -37,7 +37,7 @@ namespace DecisionMaking.Operations
         #endregion
        
         #region Bayes-Laplas
-        public static int BLCriteria(List<FuzzyNumber> costsList, string[,] output, double[] probDistr, double adjParam = 0)
+        public static int BLCriteria(List<FuzzyNumber> costsList, out string[,] output, double[] probDistr, double adjParam = 0)
         {
             double[,] solutionMatrix = new double[costsList.Count, 2];
             int solutionIndex = -1;
@@ -69,7 +69,7 @@ namespace DecisionMaking.Operations
         #endregion
 
         #region Savage
-        public static int SavageWinCriteria(List<FuzzyNumber> costsList, string[,] output, double[] probDistr=null, double adjParam = 0)
+        public static int SavageWinCriteria(List<FuzzyNumber> costsList, out string[,] output, double[] probDistr=null, double adjParam = 0)
         {
             double[,] solutionMatrix = new double[costsList.Count, 5];
             int solutionIndex = -1;
@@ -110,7 +110,7 @@ namespace DecisionMaking.Operations
         #endregion
 
         #region Hurwitz
-        public static int HurwitzCriteria(List<FuzzyNumber> costsList, string[,] output, double[] probDistr = null, double adjParam = 0.5)
+        public static int HurwitzCriteria(List<FuzzyNumber> costsList, out string[,] output, double[] probDistr = null, double adjParam = 0.5)
         {
             double[,] solutionMatrix = new double[costsList.Count, 4];
             int solutionIndex = -1;
@@ -142,7 +142,7 @@ namespace DecisionMaking.Operations
 
         #region HL
 
-        public static int HLCriteria(List<FuzzyNumber> costsList, string[,] output, double[] probDistr, double adjParam)
+        public static int HLCriteria(List<FuzzyNumber> costsList, out string[,] output, double[] probDistr, double adjParam)
         {
             double[,] solutionMatrix = new double[costsList.Count, 4];
             int solutionIndex = -1;
@@ -178,7 +178,7 @@ namespace DecisionMaking.Operations
         #endregion
 
         #region Germeyer
-        public static int GermeyerCriteria(List<FuzzyNumber> costsList, string[,] output, double[] probDistr, double adjParam = 0)
+        public static int GermeyerCriteria(List<FuzzyNumber> costsList, out string[,] output, double[] probDistr, double adjParam = 0)
         {
             double[,] baseMatrix = new double[costsList.Count, 3];
 
@@ -233,7 +233,7 @@ namespace DecisionMaking.Operations
         #endregion
 
         #region Multiplication
-        public static int MultiplicationCriteria(List<FuzzyNumber> costsList, string[,] output, double[] probDistr = null, double adjParam = 0)
+        public static int MultiplicationCriteria(List<FuzzyNumber> costsList, out string[,] output, double[] probDistr = null, double adjParam = 0)
         {
             double[,] baseMatrix = new double[costsList.Count, 3];
 

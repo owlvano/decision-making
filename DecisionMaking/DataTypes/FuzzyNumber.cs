@@ -9,6 +9,7 @@ namespace DecisionMaking.DataTypes
     public class FuzzyNumber: DataType
     {
         private int[] _numbers;
+        public const int _numbersCount= 3;
         private const char _separator = ';';
 
         public int Left { get; set; }
@@ -25,7 +26,7 @@ namespace DecisionMaking.DataTypes
         public FuzzyNumber() : this(0, 0, 0) { }
         public FuzzyNumber(int left, int middle, int right)
         {
-            Numbers = new int[3] { left, middle, right };
+            Numbers = new int[_numbersCount] { left, middle, right };
             Left = Numbers[0];
             Middle = Numbers[1];
             Right = Numbers[2];
