@@ -18,9 +18,9 @@
         </WrapPanel>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
             <StackPanel Margin="10" Orientation="Vertical" HorizontalAlignment="Center">
-                <Label Name ="costs_Label" Content="Costs"  HorizontalAlignment="Center"/>
-                <dg2d:DataGrid2D Name="costs_DataGrid2D"  HorizontalAlignment="Center"
-                    ItemsSource2D="{Binding CostsDataOutput}" IsReadOnly="True"/>
+                <Label Name ="wins_Label" Content="Win matrix"  HorizontalAlignment="Center"/>
+                <dg2d:DataGrid2D Name="wins_DataGrid2D"  HorizontalAlignment="Center"
+                    ItemsSource2D="{Binding WinsDataOutput}" IsReadOnly="True"/>
             </StackPanel>
             <StackPanel Margin="10" Orientation="Vertical"  HorizontalAlignment="Center">
                 <Label Name ="result_Label" Content="Criteria result"  HorizontalAlignment="Center"/>

@@ -48,6 +48,7 @@ namespace DecisionMaking.ViewModels
         public DataType[,] SourceCostMatrix { get; set; }
         public FuzzyNumber[,] FuzzySourceCostMatrix { get; set; }
         public DataType FirstCost { get; set; }
+        public string FirstCostEquation { get; set; }
 
         public string TitleText
         {
@@ -129,8 +130,8 @@ namespace DecisionMaking.ViewModels
         private void RealNumberCalculation()
         {
             SourceCostMatrix = _altSolutionModel.Source.RealSourceCostMatrix;
-            FirstCost = MathOperations.CalculateCost(FirstSolution, _altSolutionModel.Source.RealSourceCostMatrix);
-
+            FirstCost = MathOperations.CalculateCost(FirstSolution, _altSolutionModel.Source.RealSourceCostMatrix, out string equation);
+            FirstCostEquation = equation;
             _sigmas = _altSolutionModel.Sigmas;
 
             for (int i = 0; i < _altSolutionModel.PathList.Count; i++)
@@ -154,9 +155,11 @@ namespace DecisionMaking.ViewModels
         private void FuzzyNumberCalculation()
         {
             SourceCostMatrix = _altSolutionModel.Source.FuzzySourceCostMatrix;
-            _altSolutionModel.FirstFuzzyCost = MathOperations.CalculateCost(FirstSolution, _altSolutionModel.Source.FuzzySourceCostMatrix);
+            _altSolutionModel.FirstFuzzyCost = MathOperations.CalculateCost(FirstSolution, _altSolutionModel.Source.FuzzySourceCostMatrix, out string equation);
 
             FirstCost = _altSolutionModel.FirstFuzzyCost;
+            FirstCostEquation = equation;
+
             _fuzzyCosts = _altSolutionModel.FuzzyCosts;
 
             for (int i = 0; i < _altSolutionModel.PathList.Count; i++)

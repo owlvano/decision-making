@@ -132,10 +132,11 @@ namespace DecisionMaking.Operations
 
         #endregion
 
-        #region CalculateCost
-        public static T CalculateCost<T>(int[,] solution, T[,] costMatrix) where T : DataType
+        #region Calculate Cost
+        public static T CalculateCost<T>(int[,] solution, T[,] costMatrix, out string equation) where T : DataType
         {
             T output = Activator.CreateInstance<T>();
+            equation = "0";
 
             if (solution.GetLength(0) != costMatrix.GetLength(0) || solution.GetLength(1) != costMatrix.GetLength(1))
             {
@@ -146,6 +147,11 @@ namespace DecisionMaking.Operations
                 for (int j = 0; j < solution.GetLength(1); j++)
                 {
                     output = (T)output.Add((T)costMatrix[i, j].Multiply(solution[i, j]));
+
+                    if (solution[i, j] != 0)
+                    {
+                        equation += "+" + solution[i, j].ToString() + "*(" + costMatrix[i, j].ToString() + ")";
+                    }
                 }
             }
             return output;

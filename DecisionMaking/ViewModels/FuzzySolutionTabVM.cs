@@ -11,6 +11,7 @@ namespace DecisionMaking.ViewModels
         private FuzzyNumber _firstCost;
 
         public FuzzyNumber CurrentCost { get; set; }
+        public string CurrentCostEquation { get; set; }
         public string FirstCostTitle { get; set; }
         public string CurrentCostTitle { get; set; }
         public int[,] ActualSolutionMatrix { get; set; }
@@ -24,7 +25,9 @@ namespace DecisionMaking.ViewModels
             ActualSolutionMatrix = MathOperations.NewSolution(altSolutionModel.FirstSolution, CurrentPath);
 
             _firstCost = altSolutionModel.FirstFuzzyCost;
-            CurrentCost = MathOperations.CalculateCost(ActualSolutionMatrix, altSolutionModel.Source.FuzzySourceCostMatrix);
+
+            CurrentCost = MathOperations.CalculateCost(ActualSolutionMatrix, altSolutionModel.Source.FuzzySourceCostMatrix, out string equation);
+            CurrentCostEquation = equation;
 
             FirstCostTitle = $"Z_{stepCount}_1";
             CurrentCostTitle = $"Z_{stepCount}_{solutionCount}";

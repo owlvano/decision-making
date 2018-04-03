@@ -7,8 +7,13 @@
              xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <DockPanel>
-        <StackPanel DockPanel.Dock="Left" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
             <WrapPanel Margin="10" Orientation="Vertical" HorizontalAlignment="Center">
                 <Label Name ="solution_output_label" Content="Alternative solution" HorizontalAlignment="Center"/>
                 <dg2d:DataGrid2D Name="solution_output_dataGrid2D" HorizontalAlignment="Center"
@@ -21,12 +26,22 @@
                  ItemsSource2D="{Binding ActualSolutionMatrix}"/>
             </WrapPanel>
             <WrapPanel Margin="10" Orientation="Horizontal"  HorizontalAlignment="Center">
-                <Label Name ="cost_label" Content="Z= "/>
-                <Label Name ="cost_value_label" Content="{Binding CurrentCost}"/>
+                <Label Name ="cost_label">
+                    <Label.Content>
+                        <TextBlock TextWrapping="WrapWithOverflow">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="Z = {0} = ({1})">
+                                    <Binding Path="CurrentCostEquation" />
+                                    <Binding Path="CurrentCost" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Label.Content>
+                </Label>
             </WrapPanel>
         </StackPanel>
         
-        <oxy:Plot Margin="10">
+        <oxy:Plot Grid.Column="1" Margin="10">
             <oxy:Plot.Axes>
                 <oxy:LinearAxis Position="Left"/>
                 <oxy:LinearAxis Position="Bottom"/>
@@ -50,5 +65,5 @@
             </oxy:Plot.Series>
         </oxy:Plot>
         
-    </DockPanel>
+    </Grid>
 </UserControl>

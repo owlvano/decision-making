@@ -12,7 +12,7 @@ namespace DecisionMaking.ViewModels
 {
     class FuzzyCriteriasTabVM : BindableBase, Tabs.ITab
     {
-        private List<FuzzyNumber> _costsList;
+        private List<FuzzyNumber> _winsList;
         private CriteriaMethod _chosenCriteria = MathOperations.minMaxCriteria;
         private CalculationVM _calcVM;
         private string[,] _calculationDataOutput;
@@ -52,7 +52,8 @@ namespace DecisionMaking.ViewModels
         public double AdjParam { get; set; } = 0.5;
 
         public double[] ProbDistr { get; set; }
-        public string[,] CostsDataOutput { get; set; }
+        public string[,] WinsDataOutput { get; set; }
+
         public string[,] CalculationDataOutput
         {
             get => _calculationDataOutput;
@@ -66,18 +67,25 @@ namespace DecisionMaking.ViewModels
         public FuzzyCriteriasTabVM(string name, List<FuzzyNumber> costsList, double[] probDistr, CalculationVM calcVM)
         {
             Name = name;
-            _costsList = costsList;
-            _calcVM = calcVM; 
+            _calcVM = calcVM;
+
+            _winsList = new List<FuzzyNumber>(costsList.Count);
+
+            foreach (FuzzyNumber i in costsList)
+            {
+                _winsList.Add(new FuzzyNumber(-1 * i.Left, -1 * i.Middle, -1 * i.Right));
+            }
 
             ProbDistr = probDistr;
-            CostsDataOutput = CreateCostsDataOutput(_costsList);
-            CalculationDataOutput = new string[_costsList.Count + 1, FuzzyNumber._numbersCount];
+            WinsDataOutput = CreateCostsDataOutput(_winsList);
+            CalculationDataOutput = new string[_winsList.Count + 1, FuzzyNumber._numbersCount];
             CalculateCommand = new DelegateCommand(ExecuteCalculateCommand);
         }
 
         private void ExecuteCalculateCommand()
         {
-            _calcVM.NextStepIndex = ChosenCriteria(_costsList, out string[,] calculationDataOutput, ProbDistr, AdjParam);
+
+            _calcVM.NextStepIndex = ChosenCriteria(_winsList, out string[,] calculationDataOutput, ProbDistr, AdjParam);
             CalculationDataOutput = calculationDataOutput;
         }
 

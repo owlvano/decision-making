@@ -12,9 +12,9 @@ namespace DecisionMaking.DataTypes
         public const int _numbersCount= 3;
         private const char _separator = ';';
 
-        public int Left { get; set; }
-        public int Middle { get; set; }
-        public int Right { get; set; }
+        public int Left { get => _numbers[0]; set => _numbers[0]=value; }
+        public int Middle { get => _numbers[1]; set => _numbers[1] = value; }
+        public int Right { get => _numbers[2]; set => _numbers[2] = value; }
         public int[] Numbers { get => _numbers; set => _numbers = value; }
 
         public int this[int i]
@@ -27,9 +27,6 @@ namespace DecisionMaking.DataTypes
         public FuzzyNumber(int left, int middle, int right)
         {
             Numbers = new int[_numbersCount] { left, middle, right };
-            Left = Numbers[0];
-            Middle = Numbers[1];
-            Right = Numbers[2];
         }
 
         public override string ToString()

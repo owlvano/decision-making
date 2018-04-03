@@ -53,3 +53,4 @@ D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\DecisionMaking.csproj.CoreCompileInputs.cache
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\DecisionMaking.exe
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\DecisionMaking.pdb
+D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Release\DecisionMaking.csprojResolveAssemblyReference.cache

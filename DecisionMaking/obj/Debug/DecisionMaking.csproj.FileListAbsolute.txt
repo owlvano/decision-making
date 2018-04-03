@@ -55,7 +55,6 @@ D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\bin\
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\bin\Debug\Prism.xml
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\bin\Debug\Prism.Wpf.xml
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.xml
-D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Debug\DecisionMaking.csprojResolveAssemblyReference.cache
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Debug\Views\FuzzyCriteriasTabView.baml
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Debug\Views\FuzzySolutionTabView.baml
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Debug\Views\GraphTabView.baml
@@ -81,3 +80,4 @@ D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Debug\DecisionMaking.csproj.CoreCompileInputs.cache
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Debug\DecisionMaking.exe
 D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Debug\DecisionMaking.pdb
+D:\univer\4kurs\2semester\TRP\DecisionMaking\decision-making\DecisionMaking\obj\Debug\DecisionMaking.csprojResolveAssemblyReference.cache
