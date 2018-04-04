@@ -13,10 +13,12 @@ namespace DecisionMaking.ViewModels
     class FuzzyCriteriasTabVM : BindableBase, Tabs.ITab
     {
         private List<FuzzyNumber> _winsList;
+        private List<double> _zetaData;
         private CriteriaMethod _chosenCriteria = MathOperations.minMaxCriteria;
         private CalculationVM _calcVM;
         private string[,] _calculationDataOutput;
         private bool _isAddDataEnabled = false;
+
 
         public delegate int CriteriaMethod(List<FuzzyNumber> costsList, out string[,] output, double[] probDistr, double adjParam);
 
@@ -50,16 +52,22 @@ namespace DecisionMaking.ViewModels
 
         public string Name { get; set; }
         public double AdjParam { get; set; } = 0.5;
-
         public double[] ProbDistr { get; set; }
-        public string[,] WinsDataOutput { get; set; }
 
+        public string[,] WinsDataOutput { get; set; }
         public string[,] CalculationDataOutput
         {
             get => _calculationDataOutput;
             set => SetProperty(ref _calculationDataOutput, value);
         }
 
+        public string[] ZetaOutput
+        {
+            get
+            {
+                return _zetaData.Select(x => x.ToString()).ToArray(); //yet to be displayed
+            }
+        }
 
         public DelegateCommand CalculateCommand { get; set; }
         
@@ -68,17 +76,20 @@ namespace DecisionMaking.ViewModels
         {
             Name = name;
             _calcVM = calcVM;
+            ProbDistr = probDistr;
 
             _winsList = new List<FuzzyNumber>(costsList.Count);
+            _zetaData = new List<double>(costsList.Count);
 
             foreach (FuzzyNumber i in costsList)
             {
                 _winsList.Add(new FuzzyNumber(-1 * i.Left, -1 * i.Middle, -1 * i.Right));
+                _zetaData.Add((i.Left + 2 * i.Middle + i.Right) / 2);
             }
 
-            ProbDistr = probDistr;
             WinsDataOutput = CreateCostsDataOutput(_winsList);
             CalculationDataOutput = new string[_winsList.Count + 1, FuzzyNumber._numbersCount];
+
             CalculateCommand = new DelegateCommand(ExecuteCalculateCommand);
         }
 

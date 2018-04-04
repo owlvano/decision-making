@@ -27,6 +27,12 @@
                 <dg2d:DataGrid2D Name="result_DataGrid2D"  HorizontalAlignment="Center"
                      ItemsSource2D="{Binding CalculationDataOutput}" IsReadOnly="True"/>
             </StackPanel>
+            <!--Zeta implementation-->
+            <!--<StackPanel Margin="10" Orientation="Vertical"  HorizontalAlignment="Center">
+                <Label Name ="zeta_Label" Content="Zeta(ζ)"  HorizontalAlignment="Center"/>
+                <dg2d:DataGrid2D Name="zeta_DataGrid2D"  HorizontalAlignment="Center"
+                     ItemsSource2D="{Binding ZetaOutput, Mode=OneWay}" IsReadOnly="True"/>
+            </StackPanel>-->
         </StackPanel>
     </DockPanel>
 </UserControl>

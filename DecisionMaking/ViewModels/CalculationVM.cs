@@ -161,6 +161,7 @@ namespace DecisionMaking.ViewModels
             FirstCostEquation = equation;
 
             _fuzzyCosts = _altSolutionModel.FuzzyCosts;
+            _fuzzyCosts.Add(_altSolutionModel.FirstFuzzyCost);
 
             for (int i = 0; i < _altSolutionModel.PathList.Count; i++)
             {

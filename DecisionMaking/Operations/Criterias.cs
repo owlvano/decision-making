@@ -149,20 +149,14 @@ namespace DecisionMaking.Operations
         #region Germeyer
         public static int GermeyerCriteria(List<FuzzyNumber> costsList, out string[,] output, double[] probDistr, double adjParam = 0)
         {
-            List<FuzzyNumber> lossCostsList = new List<FuzzyNumber>(costsList.Count);
 
-            foreach (FuzzyNumber i in costsList)
-            {
-                lossCostsList.Add(new FuzzyNumber(-1 * i.Left, -1 * i.Middle, -1 * i.Right));
-            }
-
-            double[,] baseMatrix = new double[lossCostsList.Count, 3];
+            double[,] baseMatrix = new double[costsList.Count, 3];
 
             for(int i =0; i< baseMatrix.GetLength(0); i++)
             {
                 for(int j=0; j < baseMatrix.GetLength(1); j++)
                 {
-                    baseMatrix[i, j] = lossCostsList[i].Numbers[j];
+                    baseMatrix[i, j] = costsList[i].Numbers[j];
                 }
             }
 
@@ -178,11 +172,11 @@ namespace DecisionMaking.Operations
             }
 
             string[] headers = new string[5] { "Ej1(+A)", "Ej2(+A)", "Ej3(+A)", "Eir = min(j) Eij * Qj", "Z = max(i) Eir" };
-            double[,] solutionMatrix = new double[lossCostsList.Count, headers.Length-1];
+            double[,] solutionMatrix = new double[costsList.Count, headers.Length-1];
             int solutionIndex = -1;
 
 
-            for (int i = 0; i < lossCostsList.Count; i++)
+            for (int i = 0; i < costsList.Count; i++)
             {
                 for (int j = 0; j < baseMatrix.GetLength(1); j++)
                 {
